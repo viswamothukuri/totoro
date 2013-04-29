@@ -1,0 +1,71 @@
+table.calendar {
+	width: 200px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+table.calendarTiles {
+	width: 200px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+table.calendarTiles tr th,table.calendarTiles tr td {
+	font-size: 11px;
+}
+
+table.calendarTiles tr th.calendarTile {
+	background-color: #dddddd;
+	border-top: 1px solid #ffffff;
+	border-left: 1px solid #ffffff;
+	border-right: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
+}
+
+table.calendarTiles tr td.calendarTileEmpty {
+	background-color: #ffffff;
+	border-top: 1px solid #ffffff;
+	border-left: 1px solid #ffffff;
+	border-right: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
+}
+
+table.calendarTiles tr td.calendarTile {
+	background-color: #ffffff;
+	border-top: 1px solid #ffffff;
+	border-left: 1px solid #ffffff;
+	border-right: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
+}
+
+table.calendarTiles tr td.calendarTileWeekend {
+	background-color: #eeeeee;
+	border-top: 1px solid #eeeeee;
+	border-left: 1px solid #eeeeee;
+	border-right: 1px solid #bbbbbb;
+	border-bottom: 1px solid #bbbbbb;
+}
+
+table.calendarTiles tr td.calendarTileToday {
+	background-color: #ffffcc;
+	border-top: 1px solid #ffffff;
+	border-left: 1px solid #ffffff;
+	border-right: 1px solid #cccc66;
+	border-bottom: 1px solid #cccc66;
+}
+
+table.calendarTiles tr td.calendarTileCurrent {
+	background-color: #cceeff;
+	border-top: 1px solid #ddffff;
+	border-left: 1px solid #ddffff;
+	border-right: 1px solid #aaccdd;
+	border-bottom: 1px solid #aaccdd;
+}
+
+.calendarText,a:active .calendarText,a:visited .calendarText {
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 11px;
+}

@@ -1,0 +1,21 @@
+<GlobalNamingResources>
+<Resource auth="Container" defaultAutoCommit="false"
+	defaultReadOnly="false" fairQueue="true" jmxEnabled="true"
+	logAbandoned="true" removeAbandoned="true" testOnBorrow="true"
+	testOnReturn="false" testWhileIdle="true" initialSize="1" minIdle="1"
+	maxActive="5" maxIdle="1" maxWait="5000" minEvictableIdleTimeMillis="5000"
+	removeAbandonedTimeout="1200" timeBetweenEvictionRunsMillis="5000"
+	validationInterval="30000" type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
+	name="jdbc/ssoDataSource" username="rsso" password="rsso"
+	url="jdbc:oracle:thin:@ssodevvip:1521:ssodev" validationQuery="select 1 from dual" />
+	
+    <Resource name="mail/ssoMailSession" auth="Container"
+                    type="javax.mail.Session"
+                    mail.smtp.host="localhost"/>
+	
+	<Resource CHAN="TO.OTHERS" HOST="mqappdev1" PORT="1414" QMGR="MQAPPDEV" TRAN="1" auth="Container" description="JMS Queue Connection Factory for sending messages" factory="com.ibm.mq.jms.MQConnectionFactoryFactory" name="controlM.ConnectionFactory" type="com.ibm.mq.jms.MQQueueConnectionFactory"/>
+    <Resource QU="AART.SANDBOX.SDTXS01.CMREQUEST" auth="Container" factory="com.ibm.mq.jms.MQQueueFactory" name="controlM.RequestQueue" type="com.ibm.mq.jms.MQQueue"/>            
+    <Resource QU="AART.SANDBOX.SDTXS01.CMRESPONSE" auth="Container" factory="com.ibm.mq.jms.MQQueueFactory" name="controlM.ResponseQueue" type="com.ibm.mq.jms.MQQueue"/>            
+   
+	
+</GlobalNamingResources>

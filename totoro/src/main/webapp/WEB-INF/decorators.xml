@@ -1,0 +1,5 @@
+<decorators defaultdir="/WEB-INF/decorators">
+	<decorator name="clean-bootstrap" page="clean-bootstrap.jsp" />
+	
+
+</decorators>

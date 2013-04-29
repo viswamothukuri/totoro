@@ -1,0 +1,12 @@
+<Context>
+	<!-- 
+    <ResourceLink global="jdbc/ssoDataSource" name="jdbc/ssoDataSource"/>
+    <ResourceLink global="mail/ssoMailSession" name="mail/ssoMailSession"/>
+    
+    <ResourceLink global="controlM.ConnectionFactory" name="controlM.ConnectionFactory"/>
+    <ResourceLink global="controlM.RequestQueue" name="controlM.RequestQueue"/>
+	<ResourceLink global="controlM.ResponseQueue" name="controlM.ResponseQueue"/>
+    
+    <ResourceLink name="schema" global="schema" type="java.lang.String"/>
+     -->
+</Context>
