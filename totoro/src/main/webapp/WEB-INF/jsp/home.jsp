@@ -8,8 +8,6 @@
 
 <div id="content">
 
-<!-- <div class="page-header">
-<h1>Totoro <small> - Fixing Our Data</small></h1></div> -->
 
 <div class="row-fluid">
 	<div class="hero-unit span6">
