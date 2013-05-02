@@ -20,7 +20,7 @@
 		  	<a class="btn btn-success" href="${pageContext.request.contextPath }/a/admin/usergroup/new"><i class="icon-plus"></i> <fmt:message key="usergroup.list.actions.addnew"/></a>
 		</form>
 
-		<c:if test="${empty results }">
+		<c:if test="${empty results and param.q != null }">
 			<div class="alert alert-info">
 				<fmt:message key="usergroup.list.noresults">
 					<fmt:param value="${param.q }"/>

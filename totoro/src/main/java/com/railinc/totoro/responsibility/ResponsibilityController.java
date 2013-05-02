@@ -1,7 +1,6 @@
 package com.railinc.totoro.responsibility;
 
 import static com.google.common.collect.Collections2.transform;
-import static com.google.common.collect.Lists.newArrayList;
 
 import java.beans.PropertyEditorSupport;
 import java.util.Arrays;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -131,7 +129,7 @@ public class ResponsibilityController {
 
 
 	@RequestMapping(value="/{id}/delete",method=RequestMethod.GET)
-	public String delete(HttpServletRequest request, Model model, @PathVariable("id") String id) {
+	public String delete(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
 		Responsibility ss = this.service.get(id);
 		this.service.delete(ss);
 		
@@ -145,22 +143,20 @@ public class ResponsibilityController {
 	}
 	
 	@RequestMapping(value="/{id}/undelete",method=RequestMethod.GET)
-	public String undelete(HttpServletRequest request, Model model, @PathVariable("id") String id) {
+	public String undelete(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
 		Responsibility ss = this.service.get(id);
 		this.service.undelete(ss);
 		
 		FlashMessages.add(request, "responsibility.succesfullydeleted", 
 				new Object[]{ss.getId(), ss.getRuleNumber()}, 
 				"Successfully deleted the Responsibility");
-
-		
 		
 		return "redirect:../list";
 	}
 	
 
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public String editForm(Model model, @PathVariable("id") String id) {
+	public String editForm(Model model, @PathVariable("id") Long id) {
 		Responsibility ss = this.service.get(id);
 		service.save(ss);
 		model.addAttribute("responsibility", TO_FORM.apply(ss));
@@ -175,10 +171,12 @@ public class ResponsibilityController {
 	}
 
 	@RequestMapping(value="/{id}",method=RequestMethod.POST,params="_save")
-	public String submitEditForm(HttpServletRequest request, @ModelAttribute("responsibility") @Valid ResponsibilityForm form, BindingResult result, @PathVariable("id") String id) {
+	public String submitEditForm(HttpServletRequest request, @ModelAttribute("responsibility") @Valid ResponsibilityForm form, BindingResult result, @PathVariable("id") Long id) {
 		Responsibility ss = this.service.get(id);
-//		ss.setName(form.getRuleNumber());
-//		ss.setUserIds(form.getUserIds());
+		ss.setSourceSystem(form.getSourceSystem());
+		ss.setRuleNumber(form.getRuleNumber());
+		ss.setResponsiblePersonId(form.getPerson());
+		ss.setResponsiblePersonType(form.getPersonType());
 		this.service.save(ss);
 		
 		FlashMessages.add(request, "responsibility.succesfullyupdated", 

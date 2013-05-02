@@ -20,10 +20,10 @@
 		  	<a class="btn btn-success" href="${pageContext.request.contextPath }/a/admin/sourcesystem/new"><i class="icon-plus"></i> <fmt:message key="sourcesystem.list.actions.addnew"/></a>
 		</form>
 
-		<c:if test="${empty results }">
+		<c:if test="${empty results and param.q != null}">
 			<div class="alert alert-info">
 				<fmt:message key="sourcesystem.list.noresults">
-					<fmt:param value="${param.q }"/>
+					<fmt:param value="${param.q == null ? '' : param.q}"/>
 				</fmt:message>
 			</div>
 		</c:if>

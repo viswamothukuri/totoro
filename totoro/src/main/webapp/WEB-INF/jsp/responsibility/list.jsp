@@ -28,7 +28,7 @@
 		  		<a class="btn btn-success" href="${pageContext.request.contextPath }/a/admin/responsibility/new"><i class="icon-plus"></i> <fmt:message key="responsibility.list.actions.addnew"/></a>
 		
 	
-		<c:if test="${empty responsibilitysearch.results }">
+		<c:if test="${empty responsibilitysearch.results  and param.q != null }">
 			<div class="alert alert-info">
 				<fmt:message key="responsibility.list.noresults">
 					<fmt:param value="${param.q }"/>
@@ -38,35 +38,42 @@
 
 		<c:if test="${not empty responsibilitysearch.results }">
 		
-		<c:if test="${responsibilitysearch.paging.pageCount gt -1 }">
 		<div class="pagination">
-			<ul>
-			    <li class="${responsibilitysearch.paging.page eq 0 ? 'disabled' : ''}"><a href="#">&laquo;</a></li>
-				<c:forEach items="${responsibilitysearch.paging.pages}" var="pg">
-				<li class="${responsibilitysearch.paging.page eq pg ? 'active' : ''}"><a href="#">${pg + 1}</a></li>
-				</c:forEach>
-				<li class="${responsibilitysearch.paging.page eq (responsibilitysearch.paging.pageCount - 1) ? 'disabled' : ''}"><a href="#">&raquo;</a></li>
-			</ul>
+			<div class="pagination pull-left">
+			Total Count : <span class="label label-info">${ responsibilitysearch.paging.totalCount}</span>
+			</div>
+			
+			
+			<c:if test="${responsibilitysearch.paging.pageCount gt 1 }">
+			<div class="pagination pagination-right">
+				<ul>
+				    <li class="${responsibilitysearch.paging.page eq 0 ? 'disabled' : ''}"><a href="#">&laquo;</a></li>
+					<c:forEach items="${responsibilitysearch.paging.pages}" var="pg">
+					<li class="${responsibilitysearch.paging.page eq pg ? 'active' : ''}"><a href="#">${pg + 1}</a></li>
+					</c:forEach>
+					<li class="${responsibilitysearch.paging.page eq (responsibilitysearch.paging.pageCount - 1) ? 'disabled' : ''}"><a href="#">&raquo;</a></li>
+				</ul>
+			</div>
+			</c:if>
 		</div>
-		</c:if>
 		
 		
 		<table class="table table-striped table-bordered table-condensed">
 			<colgroup>
 				<col />
+				<col width="5%"/>
 				<col />
+				<col  width="5%" />
 				<col />
-				<col />
-				<col width="20%" align="right"/>
+				<col width="10%" align="right"/>
 			</colgroup>
 			<thead>
 				<tr>
-					<th class="p_id"><fmt:message key="responsibility.list.th.id"/></th>
-					<th class="p_name"><fmt:message key="responsibility.list.th.name"/></th>
-					<th class="p_deleted"><fmt:message key="responsibility.list.th.status"/></th>
-					<th class=""><fmt:message key="responsibility.list.th.updater"/></th>
-					<th></th>
-					<th></th>
+					<th><fmt:message key="responsibility.list.th.sourcesystem"/></th>
+					<th><fmt:message key="responsibility.list.th.rulenumber"/></th>
+					<th><fmt:message key="responsibility.list.th.status"/></th>
+					<th><fmt:message key="responsibility.list.th.assignmenttype"/></th>
+					<th><fmt:message key="responsibility.list.th.updater"/></th>
 					<th class="p_actions"><fmt:message key="responsibility.list.th.actions"/></th>
 				</tr>
 			</thead>
@@ -83,8 +90,6 @@
 						<c:if test="${ not r.deleted }">
 						<span class="label label-success"><fmt:message key="responsibility.list.td.status.notdeleted"/></span>
 							</c:if>
-						</td>
-						<td>
 						</td>
 						<td>
 							<fmt:message key="responsibility.list.td.updated">
@@ -125,13 +130,13 @@
 			</div>
 			<span class="hide" id="delete-responsibility-id"></span>
 			<div class="modal-footer">
-				<button class="btn btn-inverse" data-dismiss="modal" aria-hidden="true">No</button> 
+				<button class="btn btn-inverse" data-dismiss="modal">No</button> 
 				<a href="#" onclick="document.location='${pageContext.request.contextPath }/a/admin/responsibility/' + $('#delete-responsibility-id').text() + '/delete';" class="btn btn-danger">Yes, Delete It</a>
 			</div>
 		</div>
 		<div class="modal hide fade" id="undelete-confirm">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h3>Are you sure?</h3>
 			</div>
 			<div class="modal-body">
@@ -139,7 +144,7 @@
 			</div>
 			<span class="hide" id="undelete-responsibility-id"></span>
 			<div class="modal-footer">
-				<button class="btn btn-inverse" data-dismiss="modal" aria-hidden="true">No</button> 
+				<button class="btn btn-inverse" data-dismiss="modal">No</button> 
 				<a href="#" onclick="document.location='${pageContext.request.contextPath }/a/admin/responsibility/' + $('#undelete-responsibility-id').text() + '/undelete';" class="btn btn-danger">Yes, Delete It</a>
 			</div>
 		</div>

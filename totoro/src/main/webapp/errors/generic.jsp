@@ -1,5 +1,3 @@
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@page isErrorPage="true" language="java"%>
 <html>
 <head>
