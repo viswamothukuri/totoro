@@ -39,6 +39,7 @@
 		</li>
 		<li>Stewardship by Source System?</li>
 		<li>Task Assignment and notification</li>
+		<li>Outlook Tasks? -- is it possible</li>
 		<li>Get My Tasks</li>
 		<li>Spring Web Flow for Task Handling?</li>
 		<li>Task Completion Notification to MDM</li>

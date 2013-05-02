@@ -355,71 +355,17 @@ a:focus>.sf-sub-indicator,a:hover>.sf-sub-indicator,a:active>.sf-sub-indicator,l
 }
 
 
-/***********************END Table ******************/
-
-/****************************** Controls Section ******/
-.controlBar {
-	display: block;
-	clear: both;
-	padding: 10px;
-	text-align: right;
-	border-top: 1px solid #999;
-}
-
-.controlBar2 {
-	display: block;
-	clear: both;
-	padding: 10px;
-	text-align: right;
-	border-top: 1px solid #999;
-	background-color: #eee;
-	margin-top: 30px;
-}
-
 
 
 
 
 /*******************footer***************************/
 #rail-footer {
-	width: 100%;
-	border-top: 5px solid #933;
-	text-align: center;
+	border-top: 10px solid #933;
 	background-color: #FFF;
-	margin: 10px auto;
-	min-width: 800px;
 	clear: both;
 }
 
-#rail-footer ul.horizontal-menu { /*width:400px;*/
-	margin: 10px auto;
-	display: block;
-	padding: 0;
-}
-
-#rail-footer ul.horizontal-menu li {
-	display: inline;
-	line-height: 24px;
-}
-
-#rail-footer ul.horizontal-menu li a {
-	border-left: 1px solid #9D9FA1;
-	font-size: 12px;
-	padding: 0 10px 0 10px;
-	color: #9D9FA1;
-	text-decoration: none;
-}
-
-#rail-footer ul.horizontal-menu li:first-child a {
-	border-left: 0;
-	margin: 0;
-	padding: 0 10 0 0;
-}
-
-#rail-footer ul.horizontal-menu li a:hover {
-	color: #9D9FA1;
-	text-decoration: underline;
-}
 
 
 div#content-container { min-height: 300px; }

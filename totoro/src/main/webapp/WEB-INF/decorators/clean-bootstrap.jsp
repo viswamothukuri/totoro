@@ -99,8 +99,8 @@
 	<!-- Footer Begin -->
 
 
-	<div id="rail-footer" class="navbar navbar-fixed-bottom">
-		<ul class="nav">
+	<div id="rail-footer" class="navbar navbar-fixed-bottom" style="">
+		<ul class="nav" style="display:none;" id="footer-nav">
 			<li><a href="/legal" class="first">legal notices</a>
 			</li>
 			<li><a href="/privacy">privacy rights</a>
@@ -110,13 +110,19 @@
 			<li><a href="/contactus">contact us</a>
 			</li>
 		</ul>
-
 	</div>
 
 	<decorator:getProperty property="div.post-content-js"/>
 	<script src="${pageContext.request.contextPath }/r/bootstrap/js/bootstrap.min.js" type='text/javascript'></script>
 	<script>
 	String.prototype.trim = function() { return this.replace(/^\s+|\s+$/g, ''); }
+	$(function() {
+		$("#rail-footer").hover(function() {
+			  $(this).find('#footer-nav').stop(true, true).slideToggle();
+			}, function() {
+				  $(this).find('#footer-nav').stop(true, true).slideToggle();
+			});
+	});
 	</script>	
 </body>
 </html>
