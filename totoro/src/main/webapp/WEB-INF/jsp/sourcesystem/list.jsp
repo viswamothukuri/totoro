@@ -17,7 +17,7 @@
 			    <input type="text" class="span2" name="q" id="q" value="${param.q }" />
 			    <input type="submit" class="btn" value="Search"/>
 			    <input type="button" class="btn" value="Reset" onclick="$('#q').attr('value','');this.form.submit();"/>
-		  	<a class="btn btn-success" href="${pageContext.request.contextPath }/a/admin/sourcesystem/new"><i class="icon-plus"></i> <fmt:message key="sourcesystem.list.actions.addnew"/></a>
+		  	<a class="btn btn-success" href="${pageContext.request.contextPath }/admin/sourcesystem/new"><i class="icon-plus"></i> <fmt:message key="sourcesystem.list.actions.addnew"/></a>
 		</form>
 
 		<c:if test="${empty results and param.q != null}">
@@ -73,7 +73,7 @@
 						    	<a class="btn btn-mini" onclick="$('#undelete-sourcesystem-name').text('${r.name }');$('#undelete-sourcesystem-id').text('${r.identifier }');$('#undelete-confirm').modal();"><i class="icon-retweet"></i> <fmt:message key="sourcesystem.list.actions.undelete"/></a>
 						    </c:if>
 						    <c:if test="${ not r.deleted }">
-							    <a class="btn btn-mini" href="${pageContext.request.contextPath }/a/admin/sourcesystem/${r.identifier}"><i class="icon-pencil"></i> <fmt:message key="sourcesystem.list.actions.edit"/></a>
+							    <a class="btn btn-mini" href="${pageContext.request.contextPath }/admin/sourcesystem/${r.identifier}"><i class="icon-pencil"></i> <fmt:message key="sourcesystem.list.actions.edit"/></a>
 						    	<a class="btn-danger btn btn-mini" onclick="$('#delete-sourcesystem-name').text('${r.name }');$('#delete-sourcesystem-id').text('${r.identifier }');$('#delete-confirm').modal();"><i class="icon-trash"></i> <fmt:message key="sourcesystem.list.actions.delete"/></a>
 						    </c:if>
 						</td>
@@ -100,7 +100,7 @@
 			<span class="hide" id="delete-sourcesystem-id"></span>
 			<div class="modal-footer">
 				<button class="btn btn-inverse" data-dismiss="modal" aria-hidden="true">No</button> 
-				<a href="#" onclick="document.location='${pageContext.request.contextPath }/a/admin/sourcesystem/' + $('#delete-sourcesystem-id').text() + '/delete';" class="btn btn-danger">Yes, Delete It</a>
+				<a href="#" onclick="document.location='${pageContext.request.contextPath }/admin/sourcesystem/' + $('#delete-sourcesystem-id').text() + '/delete';" class="btn btn-danger">Yes, Delete It</a>
 			</div>
 		</div>
 		<div class="modal hide fade" id="undelete-confirm">
@@ -114,7 +114,7 @@
 			<span class="hide" id="undelete-sourcesystem-id"></span>
 			<div class="modal-footer">
 				<button class="btn btn-inverse" data-dismiss="modal" aria-hidden="true">No</button> 
-				<a href="#" onclick="document.location='${pageContext.request.contextPath }/a/admin/sourcesystem/' + $('#undelete-sourcesystem-id').text() + '/undelete';" class="btn btn-danger">Yes, Delete It</a>
+				<a href="#" onclick="document.location='${pageContext.request.contextPath }/admin/sourcesystem/' + $('#undelete-sourcesystem-id').text() + '/undelete';" class="btn btn-danger">Yes, Delete It</a>
 			</div>
 		</div>
 	</div>

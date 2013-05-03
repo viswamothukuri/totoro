@@ -37,7 +37,7 @@ public class MessageSubmissionController {
 			@ModelAttribute("form") MessageSubmissionForm form,
 			BindingResult result) {
 		
-		return "contextRelative:/";
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "/form", method = RequestMethod.POST, params = "_submit")

@@ -64,9 +64,15 @@
 					<li class="dropdown ${where.contains('admin') ? 'active' : '' }"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown"> Admin <b class="caret"></b> </a>
 						<ul class="dropdown-menu">
-							<li class="${where.contains('sourcesystem') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/a/admin/sourcesystem/list">Source Systems</a>						
-							<li class="${where.contains('usergroup') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/a/admin/usergroup/list">User Groups</a>						
-							<li class="${where.contains('responsibility') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/a/admin/responsibility/list">Responsibilities</a>						
+							<li class="${where.contains('sourcesystem') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/admin/sourcesystem/list">Source Systems</a>						
+							<li class="${where.contains('usergroup') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/admin/usergroup/list">User Groups</a>						
+							<li class="${where.contains('responsibility') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/admin/responsibility/list">Responsibilities</a>						
+						</ul>
+					</li>
+					<li class="dropdown ${where.contains('support') ? 'active' : '' }"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"> Support <b class="caret"></b> </a>
+						<ul class="dropdown-menu">
+							<li class="${where.contains('support.message') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/support/message">Messaging</a>						
 						</ul>
 					</li>
 				</ul>

@@ -14,9 +14,9 @@
 	<h4>Admin Functions</h4>
 	<p>Tagline</p>
 	<ul class="pull-right nav">
-		<li><a href="${ pageContext.request.contextPath }/a/admin/sourcesystem/list">Source Systems</a>						
-		<li><a href="${ pageContext.request.contextPath }/a/admin/usergroup/list">User Groups</a>						
-		<li><a href="${ pageContext.request.contextPath }/a/admin/responsibility/list">Responsibilities</a>						
+		<li><a href="${ pageContext.request.contextPath }/admin/sourcesystem/list">Source Systems</a>						
+		<li><a href="${ pageContext.request.contextPath }/admin/usergroup/list">User Groups</a>						
+		<li><a href="${ pageContext.request.contextPath }/admin/responsibility/list">Responsibilities</a>						
 	</ul>
 	<div style="clear:both"></div>
 	</div>

@@ -25,7 +25,7 @@
 			    
 			    <input type="submit" class="btn" value="Search"/>
 			    <input type="button" class="btn" value="Reset" onclick="$('#q').attr('value','');this.form.submit();"/>
-		  		<a class="btn btn-success" href="${pageContext.request.contextPath }/a/admin/responsibility/new"><i class="icon-plus"></i> <fmt:message key="responsibility.list.actions.addnew"/></a>
+		  		<a class="btn btn-success" href="${pageContext.request.contextPath }/admin/responsibility/new"><i class="icon-plus"></i> <fmt:message key="responsibility.list.actions.addnew"/></a>
 		
 	
 		<c:if test="${empty responsibilitysearch.results  and param.q != null }">
@@ -103,7 +103,7 @@
 						    	<a class="btn btn-mini" onclick="$('#undelete-responsibility-name').text('${r.ruleNumber }');$('#undelete-responsibility-id').text('${r.id }');$('#undelete-confirm').modal();"><i class="icon-retweet"></i> <fmt:message key="responsibility.list.actions.undelete"/></a>
 						    </c:if>
 						    <c:if test="${ not r.deleted }">
-							    <a class="btn btn-mini" href="${pageContext.request.contextPath }/a/admin/responsibility/${r.id}"><i class="icon-pencil"></i> <fmt:message key="responsibility.list.actions.edit"/></a>
+							    <a class="btn btn-mini" href="${pageContext.request.contextPath }/admin/responsibility/${r.id}"><i class="icon-pencil"></i> <fmt:message key="responsibility.list.actions.edit"/></a>
 						    	<a class="btn-danger btn btn-mini" onclick="$('#delete-responsibility-name').text('${r.ruleNumber }');$('#delete-responsibility-id').text('${r.id }');$('#delete-confirm').modal();"><i class="icon-trash"></i> <fmt:message key="responsibility.list.actions.delete"/></a>
 						    </c:if>
 						</td>
@@ -131,7 +131,7 @@
 			<span class="hide" id="delete-responsibility-id"></span>
 			<div class="modal-footer">
 				<button class="btn btn-inverse" data-dismiss="modal">No</button> 
-				<a href="#" onclick="document.location='${pageContext.request.contextPath }/a/admin/responsibility/' + $('#delete-responsibility-id').text() + '/delete';" class="btn btn-danger">Yes, Delete It</a>
+				<a href="#" onclick="document.location='${pageContext.request.contextPath }/admin/responsibility/' + $('#delete-responsibility-id').text() + '/delete';" class="btn btn-danger">Yes, Delete It</a>
 			</div>
 		</div>
 		<div class="modal hide fade" id="undelete-confirm">
@@ -145,7 +145,7 @@
 			<span class="hide" id="undelete-responsibility-id"></span>
 			<div class="modal-footer">
 				<button class="btn btn-inverse" data-dismiss="modal">No</button> 
-				<a href="#" onclick="document.location='${pageContext.request.contextPath }/a/admin/responsibility/' + $('#undelete-responsibility-id').text() + '/undelete';" class="btn btn-danger">Yes, Delete It</a>
+				<a href="#" onclick="document.location='${pageContext.request.contextPath }/admin/responsibility/' + $('#undelete-responsibility-id').text() + '/undelete';" class="btn btn-danger">Yes, Delete It</a>
 			</div>
 		</div>
 	</div>

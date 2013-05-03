@@ -17,7 +17,7 @@
 			    <input type="text" class="span2" name="q" id="q" value="${param.q }" />
 			    <input type="submit" class="btn" value="Search"/>
 			    <input type="button" class="btn" value="Reset" onclick="$('#q').attr('value','');this.form.submit();"/>
-		  	<a class="btn btn-success" href="${pageContext.request.contextPath }/a/admin/usergroup/new"><i class="icon-plus"></i> <fmt:message key="usergroup.list.actions.addnew"/></a>
+		  	<a class="btn btn-success" href="${pageContext.request.contextPath }/admin/usergroup/new"><i class="icon-plus"></i> <fmt:message key="usergroup.list.actions.addnew"/></a>
 		</form>
 
 		<c:if test="${empty results and param.q != null }">
@@ -83,7 +83,7 @@
 						    	<a class="btn btn-mini" onclick="$('#undelete-usergroup-name').text('${r.name }');$('#undelete-usergroup-id').text('${r.id }');$('#undelete-confirm').modal();"><i class="icon-retweet"></i> <fmt:message key="usergroup.list.actions.undelete"/></a>
 						    </c:if>
 						    <c:if test="${ not r.deleted }">
-							    <a class="btn btn-mini" href="${pageContext.request.contextPath }/a/admin/usergroup/${r.id}"><i class="icon-pencil"></i> <fmt:message key="usergroup.list.actions.edit"/></a>
+							    <a class="btn btn-mini" href="${pageContext.request.contextPath }/admin/usergroup/${r.id}"><i class="icon-pencil"></i> <fmt:message key="usergroup.list.actions.edit"/></a>
 						    	<a class="btn-danger btn btn-mini" onclick="$('#delete-usergroup-name').text('${r.name }');$('#delete-usergroup-id').text('${r.id }');$('#delete-confirm').modal();"><i class="icon-trash"></i> <fmt:message key="usergroup.list.actions.delete"/></a>
 						    </c:if>
 						</td>
@@ -110,7 +110,7 @@
 			<span class="hide" id="delete-usergroup-id"></span>
 			<div class="modal-footer">
 				<button class="btn btn-inverse" data-dismiss="modal" aria-hidden="true">No</button> 
-				<a href="#" onclick="document.location='${pageContext.request.contextPath }/a/admin/usergroup/' + $('#delete-usergroup-id').text() + '/delete';" class="btn btn-danger">Yes, Delete It</a>
+				<a href="#" onclick="document.location='${pageContext.request.contextPath }/admin/usergroup/' + $('#delete-usergroup-id').text() + '/delete';" class="btn btn-danger">Yes, Delete It</a>
 			</div>
 		</div>
 		<div class="modal hide fade" id="undelete-confirm">
@@ -124,7 +124,7 @@
 			<span class="hide" id="undelete-usergroup-id"></span>
 			<div class="modal-footer">
 				<button class="btn btn-inverse" data-dismiss="modal" aria-hidden="true">No</button> 
-				<a href="#" onclick="document.location='${pageContext.request.contextPath }/a/admin/usergroup/' + $('#undelete-usergroup-id').text() + '/undelete';" class="btn btn-danger">Yes, Delete It</a>
+				<a href="#" onclick="document.location='${pageContext.request.contextPath }/admin/usergroup/' + $('#undelete-usergroup-id').text() + '/undelete';" class="btn btn-danger">Yes, Delete It</a>
 			</div>
 		</div>
 	</div>
