@@ -64,15 +64,16 @@
 					<li class="dropdown ${where.contains('admin') ? 'active' : '' }"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown"> Admin <b class="caret"></b> </a>
 						<ul class="dropdown-menu">
-							<li class="${where.contains('sourcesystem') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/admin/sourcesystem/list">Source Systems</a>						
-							<li class="${where.contains('usergroup') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/admin/usergroup/list">User Groups</a>						
-							<li class="${where.contains('responsibility') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/admin/responsibility/list">Responsibilities</a>						
+							<li class="${where.matches('admin.sourcesystem.*') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/admin/sourcesystem/list">Source Systems</a>						
+							<li class="${where.matches('admin.usergroup.*') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/admin/usergroup/list">User Groups</a>						
+							<li class="${where.matches('admin.responsibility.*') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/admin/responsibility/list">Responsibilities</a>						
 						</ul>
 					</li>
-					<li class="dropdown ${where.contains('support') ? 'active' : '' }"><a href="#" class="dropdown-toggle"
+					<li class="dropdown ${where.matches('support.*') ? 'active' : '' }"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown"> Support <b class="caret"></b> </a>
 						<ul class="dropdown-menu">
-							<li class="${where.contains('support.message') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/support/message">Messaging</a>						
+							<li class="${where.matches('support.sendmessage.*') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/support/message">Send a Message</a>						
+							<li class="${where.matches('support.messagelist.*') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/support/messages">Messages</a>						
 						</ul>
 					</li>
 				</ul>

@@ -7,7 +7,7 @@
 <head>
 <meta name="decorator" content="clean-bootstrap" />
 <title>Send a Message</title>
-<meta name="where" content="support.message" />
+<meta name="where" content="support.sendmessage" />
 
 </head>
 <body>
