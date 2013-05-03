@@ -4,13 +4,16 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:int="http://www.springframework.org/schema/integration"
 	xsi:schemaLocation="
      http://www.springframework.org/schema/beans
      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
      http://www.springframework.org/schema/context
      http://www.springframework.org/schema/context/spring-context-3.0.xsd
      http://www.springframework.org/schema/tx
-     http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+     http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     http://www.springframework.org/schema/integration
+	 http://www.springframework.org/schema/integration/spring-integration-2.2.xsd">
 
 	<tx:annotation-driven />
 
@@ -30,6 +33,7 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="annotatedClasses">
 			<list>
+				<value>com.railinc.totoro.domain.RawInboundMessage</value>
 				<value>com.railinc.totoro.domain.UserGroup</value>
 				<value>com.railinc.totoro.domain.UserGroupMember</value>
 				<value>com.railinc.totoro.domain.SourceSystem</value>
@@ -56,4 +60,55 @@
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager" p:sessionFactory-ref="sessionFactory"/>
 
+
+
+	<bean id="ironMqClient" class="io.iron.ironmq.Client">
+		<constructor-arg>
+			<value>#{ systemProperties['ironmq.projectid'] }</value>
+		</constructor-arg>
+		<constructor-arg>
+			<value>#{ systemProperties['ironmq.token'] }</value>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="qExceptions" factory-bean="ironMqClient" factory-method="queue">
+		<constructor-arg>
+			<value>exceptions</value>
+		</constructor-arg>
+	</bean>
+
+    <bean id="ironMqInbound" class="com.railinc.totoro.integration.IronMQInboundChannel" p:queue-ref="qExceptions"/> 
+
+    <bean id="ironMqStorage" class="com.railinc.totoro.integration.InboundMessageStorageHandler" p:sessionFactory-ref="sessionFactory" />
+
+	<!-- so, this gateway can be used by services and controllers as it provides a simple interface. -->
+	<int:gateway id="exceptionsQueue"
+         service-interface="com.railinc.totoro.integration.Queue"
+         default-request-channel="mdmExceptionsOutbound" 
+         default-reply-channel="nullChannel"/>
+    
+    <!-- we want outbound messages to return ASAP -->
+    <int:channel id="mdmExceptionsOutbound">
+    	<!--  i could configure persistence on this, but not for now -->
+    	<int:queue />
+    </int:channel>
+    
+	<int:service-activator input-channel="mdmExceptionsOutbound" ref="qExceptions" method="push" output-channel="nullChannel">
+		<!-- because mdmExceptionsOutbound is a queue and not a direct channel, we need to setup a poller -->
+		<int:poller fixed-delay="100" time-unit="MILLISECONDS" max-messages-per-poll="100"/>
+	</int:service-activator>
+
+	<!-- the ironMqInbound object implements MessageSource, so it's polled by this adapter -->
+    <int:inbound-channel-adapter ref="ironMqInbound" channel="mdmExceptionsInbound">
+    	<int:poller fixed-delay="5" time-unit="SECONDS" max-messages-per-poll="100" />
+	</int:inbound-channel-adapter>
+
+	<int:channel id="mdmExceptionsInbound">
+		<int:queue />
+	</int:channel>
+	
+	<int:outbound-channel-adapter channel="mdmExceptionsInbound" ref="ironMqStorage">
+		<int:poller fixed-delay="100" time-unit="MILLISECONDS" max-messages-per-poll="100" />
+	</int:outbound-channel-adapter>
+	
 </beans>
