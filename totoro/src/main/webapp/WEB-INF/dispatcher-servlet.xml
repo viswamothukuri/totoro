@@ -13,10 +13,14 @@
      http://www.springframework.org/schema/mvc
      http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-	<mvc:resources mapping="/r/**" location="/r/" />
+	<context:component-scan base-package="com.railinc.totoro">
+	    <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+
 	<tx:annotation-driven />
-	<context:component-scan base-package="com.railinc.totoro" />
 	<mvc:annotation-driven/>
+	
+	<mvc:resources mapping="/r/**" location="/r/" />
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">

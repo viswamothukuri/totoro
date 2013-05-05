@@ -9,54 +9,59 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Table(name="DATA_EXCEPTION")
 @Entity
 public class DataException {
 
-	@Id
-	@GeneratedValue
-	@Column(name="EXCPTN_ID")
-	private Long id;
 
-	
 	@Basic(optional=false)
 	@Column(name="EXCPTN_CREATE_TS",nullable=false)
 	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull
 	private Date exceptionCreated;
 
-	@Version
-    @Column(name="VERSION")
-    private Integer version;
-		
 	@ManyToOne(optional=false)
 	@JoinColumn(name="EDW_SRC_NAME", nullable=false)
+	@NotNull
 	SourceSystem sourceSystem;
 	
 	@Basic
 	@Column(name="EDW_SRC_KEY_COLUMN",length=50,nullable=false)
+	@NotNull
+	@Size(min=1,max=50)
     private String sourceSystemKeyColumn;
 
 	@Basic
 	@Column(name="EDW_SRC_ID",length=50,nullable=false)
+	@NotNull
+	@Size(min=1,max=50)
     private String sourceSystemKeyValue;
 
 	@Basic
 	@Column(name="EDW_SRC_VALUE",length=50,nullable=false)
-    private String sourceSystemValue; // assumed wrong
+	@NotNull
+	@Size(min=1,max=50)
+	private String sourceSystemValue; // assumed wrong
 
 	@Basic
 	@Column(name="EDW_SRC_INFO",length=1024,nullable=true)
+	@Size(max=1024)
     private String sourceSystemObjectData; // assumed wrong
 	
 	@Basic
 	@Column(name="EDW_SRC_KEY",length=50,nullable=false)
+	@NotNull
+	@Size(min=1,max=50)
     private String sourceSystemRecordIdentifier;
-
 
 	@Basic(optional=false)
 	@Column(name="EXCPTN_CD",nullable=false)
@@ -64,7 +69,7 @@ public class DataException {
 
 	@Basic(optional=true)
 	@Column(name="EXCPTN_DESC",nullable=true)
-	private Long description;
+	private String description;
 
 	@Basic(optional=false)
 	@Column(name="MDM_EXCPTN_TYPE",nullable=false)
@@ -83,13 +88,31 @@ public class DataException {
 	
 	
 	// ------- totoro specific
+	@Version
+    @Column(name="VERSION")
+    private Integer version;
+		
+
+	@Id
+	@GeneratedValue
+	@Column(name="EXCPTN_ID")
+	private Long id;
+	
+	
+
 	@ManyToOne(optional=false)
+	@JoinColumn(name="MSG_ID", nullable=false)
+	private RawInboundMessage source;
+
+	
+	@ManyToOne(optional=true)
 	@JoinColumn(name="TASK_ID", nullable=true)
-	Task task;
+	private Task task;
 
 	@Basic
 	@Column(name="BUNDLE_NM",nullable=true)
 	private String bundleName;
+
 
 	public Long getId() {
 		return id;
@@ -171,11 +194,11 @@ public class DataException {
 		this.code = code;
 	}
 
-	public Long getDescription() {
+	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(Long description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
@@ -218,6 +241,15 @@ public class DataException {
 	public void setBundleName(String bundleName) {
 		this.bundleName = bundleName;
 	}
+
+	public RawInboundMessage getSource() {
+		return source;
+	}
+
+	public void setSource(RawInboundMessage source) {
+		this.source = source;
+	}
+
 
 	
 }

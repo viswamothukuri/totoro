@@ -35,6 +35,24 @@
 					<form:errors element="span" cssClass="help-inline" path="data"/>
 				</div>
 			</div>
+			
+			<pre>
+			
+			{
+"created":"2013-05-05 16:09",
+"sourcesystem":"fur",
+"sourcekeycol":"keycol1",
+"sourcekeyvalue":"keyval1",
+"sourcevalue":"srcvalue1",
+"sourceinfo":"srcinfo1",
+"sourcerecordid":"srcid1",
+"code":1034,
+"description":"mdmdesc1",
+"type":"mdmobjtype",
+"attr":"mdmattrtype",
+"value":"mdmattrvalue"
+}
+</pre>
 	</fieldset>
 
 			
