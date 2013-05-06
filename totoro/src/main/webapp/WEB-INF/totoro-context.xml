@@ -91,7 +91,7 @@
 
     <bean id="ironMqInbound" class="com.railinc.totoro.integration.IronMQInboundChannel" p:queue-ref="qExceptions"/> 
 
-	<bean id="xformerStringToRawInbound" class="com.railinc.totoro.integration.StringToRawInboundXFormer"/>
+	
 	<bean id="xformerRawInboundJsonToDataException" class="com.railinc.totoro.integration.RawInboundMessageToExceptionXFormer" />
 	<bean id="interceptorHibernatePersister" class="com.railinc.totoro.integration.HibernatePersister" p:sessionFactory-ref="sessionFactory" />
 	
@@ -119,14 +119,31 @@
 
 
 	<!-- the ironMqInbound object implements MessageSource, so it's polled by this adapter -->
+	
     <int:inbound-channel-adapter ref="ironMqInbound" channel="channelIronMqRawMessageSink">
-    	<int:poller fixed-delay="5" time-unit="SECONDS" max-messages-per-poll="100" />
+    	<int:poller fixed-delay="5" time-unit="SECONDS" max-messages-per-poll="100" >
+    		<int:transactional />
+    	</int:poller>
+    	
 	</int:inbound-channel-adapter>
 
-    <int:channel id="channelIronMqRawMessageSink"
-    	datatype="java.lang.String" />
+    <int:channel id="channelIronMqRawMessageSink" datatype="java.lang.String"/>
+ 
 
-    <int:transformer ref="xformerStringToRawInbound" input-channel="channelIronMqRawMessageSink" output-channel="channelRawInboundMessageSink" />
+
+	<!-- Takes a Message with a String payload in and creates a RawInboundMessage object -->
+	<int:chain input-channel="channelIronMqRawMessageSink" output-channel="channelRawInboundMessageSink">
+		<int:header-enricher>
+			<int:header 
+				name="#{T(com.railinc.totoro.integration.StringToRawInboundXFormer).SOURCE_HEADER}" 
+				value="#{T(com.railinc.totoro.domain.InboundSource).MDMException}" />
+		</int:header-enricher>
+		<int:transformer>
+			<bean class="com.railinc.totoro.integration.StringToRawInboundXFormer"/>
+		</int:transformer>
+	</int:chain>
+    
+
 
 	<int:channel id="channelRawInboundMessageSink"
 		datatype="com.railinc.totoro.domain.RawInboundMessage">
@@ -140,7 +157,9 @@
 
 
 	<int:transformer ref="xformerRawInboundJsonToDataException" input-channel="channelRawInboundMessageSink" output-channel="channelXFormedRawInbound">
-		<int:poller fixed-delay="100" time-unit="MILLISECONDS" max-messages-per-poll="100" />
+		<int:poller fixed-delay="100" time-unit="MILLISECONDS" max-messages-per-poll="100">
+    		<int:transactional />
+		</int:poller>
 	</int:transformer>
 	
 	
