@@ -20,6 +20,7 @@ import com.google.gson.GsonBuilder;
 import com.railinc.totoro.domain.DataException;
 import com.railinc.totoro.domain.RawInboundMessage;
 import com.railinc.totoro.domain.SourceSystem;
+import com.railinc.totoro.domain.YesNo;
 import com.railinc.totoro.integration.msg.InboundMDMExceptionMessage;
 import com.railinc.totoro.sourcesystem.SourceSystemService;
 
@@ -56,6 +57,8 @@ public class RawInboundMessageToExceptionXFormer implements Transformer, Functio
 			return MessageBuilder.fromMessage(message).withPayload(new ConstraintViolationException(violations)).build();
 		}
 
+		// all is good
+		m.setProcessed(YesNo.Y);
 		
 		return MessageBuilder.fromMessage(message).withPayload(dataException).build();
 	}
