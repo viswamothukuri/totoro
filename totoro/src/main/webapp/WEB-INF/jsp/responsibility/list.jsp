@@ -23,18 +23,11 @@
 					<form:options items="${personTypes }"/>
 			    </form:select>
 			    
-			    <input type="submit" class="btn" value="Search"/>
-			    <input type="button" class="btn" value="Reset" onclick="$('#q').attr('value','');this.form.submit();"/>
-		  		<a class="btn btn-success" href="${pageContext.request.contextPath }/admin/responsibility/new"><i class="icon-plus"></i> <fmt:message key="responsibility.list.actions.addnew"/></a>
+			    <input type="submit" class="btn btn-search" value="Search"/>
+			    <input type="button" class="btn btn-reset" value="Reset" onclick="$('#q').attr('value','');this.form.submit();"/>
+		  		<a class="btn btn-add-new" href="${pageContext.request.contextPath }/admin/responsibility/new"><i class="icon-plus"></i> <fmt:message key="responsibility.list.actions.addnew"/></a>
 		
 	
-		<c:if test="${empty responsibilitysearch.results  and param.q != null }">
-			<div class="alert alert-info">
-				<fmt:message key="responsibility.list.noresults">
-					<fmt:param value="${param.q }"/>
-				</fmt:message>
-			</div>
-		</c:if>
 
 		<c:if test="${not empty responsibilitysearch.results }">
 		
@@ -115,6 +108,13 @@
 
 		</form:form>
 
+		<c:if test="${empty responsibilitysearch.results  }">
+			<div class="alert alert-info">
+				<fmt:message key="responsibility.list.noresults">
+					<fmt:param value="${param.q }"/>
+				</fmt:message>
+			</div>
+		</c:if>
 
 
 

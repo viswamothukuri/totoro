@@ -29,6 +29,8 @@
 	</ul>
 	<h4>TODO</h4>
 	<ul>
+		<li>Finish - add search highlighting to all search pages</li>
+		<li>Setup nice error pages for 404 and 500</li>
 		<li>Exception Ingest</li>
 		<li>Exemption Processing</li>
 		<li>Exemption Notification</li>

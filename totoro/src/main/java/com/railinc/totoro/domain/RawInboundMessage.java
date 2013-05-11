@@ -18,8 +18,10 @@ public class RawInboundMessage implements Auditable {
 
 	public static final String PROPERTY_ID = "identifier";
 	public static final String PROPERTY_NAME = "name";
-	public static final String PROPERTY_DELETED = "deleted";
 	public static final String DEFAULT_ORDER_BY_PROPERTY = PROPERTY_ID;
+	public static final String PROPERTY_INBOUND_SOURCE = "source";
+	public static final String PROPERTY_INBOUND_PROCESSED = "processed";
+	public static final String PROPERTY_INBOUND_DATA = "data";
 	
 	@Id
 	@GeneratedValue
@@ -64,7 +66,9 @@ public class RawInboundMessage implements Auditable {
 	}
 
 	public void setProcessed(YesNo processed) {
-		this.processed = processed;
+		if (processed != null) {
+			this.processed = processed;
+		}
 	}
 
 	public InboundSource getSource() {
@@ -87,6 +91,10 @@ public class RawInboundMessage implements Auditable {
 
 	public void setAudit(AuditData audit) {
 		this.audit = audit;
+	}
+
+	public boolean isProcessed() {
+		return this.processed.toBoolean();
 	}
 
 

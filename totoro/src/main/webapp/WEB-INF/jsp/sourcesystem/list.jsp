@@ -15,11 +15,17 @@
 	
 		<form class="form-inline">
 			    <input type="text" class="span2" name="q" id="q" value="${param.q }" />
-			    <input type="submit" class="btn" value="Search"/>
-			    <input type="button" class="btn" value="Reset" onclick="$('#q').attr('value','');this.form.submit();"/>
-		  	<a class="btn btn-success" href="${pageContext.request.contextPath }/admin/sourcesystem/new"><i class="icon-plus"></i> <fmt:message key="sourcesystem.list.actions.addnew"/></a>
+				<script>
+				$(function() {
+					highlightSearchResult($("#q").attr("value"));
+				});
+				</script>
+			    
+			    <input type="submit" class="btn btn-search" value="Search"/>
+			    <input type="button" class="btn btn-reset" value="Reset" onclick="$('#q').attr('value','');this.form.submit();"/>
+		  	<a class="btn btn-add-new" href="${pageContext.request.contextPath }/admin/sourcesystem/new"><i class="icon-plus"></i> <fmt:message key="sourcesystem.list.actions.addnew"/></a>
 		</form>
-
+		
 		<c:if test="${empty results and param.q != null}">
 			<div class="alert alert-info">
 				<fmt:message key="sourcesystem.list.noresults">
@@ -27,6 +33,7 @@
 				</fmt:message>
 			</div>
 		</c:if>
+
 
 		<c:if test="${not empty results }">
 		<table class="table table-striped table-bordered table-condensed">
@@ -50,9 +57,8 @@
 			<tbody>
 				<c:forEach items="${results }" var="r">
 					<tr id="ss_${r.identifier }" class="${r.deleted ? 'warning' : '' }">
-						<td class="p_id">${r.identifier }
-						</td>
-						<td class="p_name">${r.name }</td>
+						<td class="p_id highlight-search-result">${r.identifier }</td>
+						<td class="p_name highlight-search-result">${r.name }</td>
 						<td class="p_deleted">
 						<c:if test="${r.deleted }">
 						<span class="label label-warning"><fmt:message key="sourcesystem.list.td.status.deleted"/></span>

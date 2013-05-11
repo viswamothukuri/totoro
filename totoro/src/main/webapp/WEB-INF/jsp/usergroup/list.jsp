@@ -15,12 +15,12 @@
 	
 		<form class="form-inline">
 			    <input type="text" class="span2" name="q" id="q" value="${param.q }" />
-			    <input type="submit" class="btn" value="Search"/>
-			    <input type="button" class="btn" value="Reset" onclick="$('#q').attr('value','');this.form.submit();"/>
-		  	<a class="btn btn-success" href="${pageContext.request.contextPath }/admin/usergroup/new"><i class="icon-plus"></i> <fmt:message key="usergroup.list.actions.addnew"/></a>
+			    <input type="submit" class="btn btn-search" value="Search"/>
+			    <input type="button" class="btn btn-reset" value="Reset" onclick="$('#q').attr('value','');this.form.submit();"/>
+		  	<a class="btn btn-add-new" href="${pageContext.request.contextPath }/admin/usergroup/new"><i class="icon-plus"></i> <fmt:message key="usergroup.list.actions.addnew"/></a>
 		</form>
 
-		<c:if test="${empty results and param.q != null }">
+		<c:if test="${empty results }">
 			<div class="alert alert-info">
 				<fmt:message key="usergroup.list.noresults">
 					<fmt:param value="${param.q }"/>

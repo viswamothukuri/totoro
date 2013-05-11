@@ -1,32 +1,20 @@
 package com.railinc.totoro.responsibility;
 
-import java.util.Collection;
-
-import com.google.common.collect.Range;
 import com.railinc.totoro.domain.ResponsiblePersonType;
 import com.railinc.totoro.domain.SourceSystem;
+import com.railinc.totoro.util.CriteriaWithPaging;
 
-public class ResponsibilityCriteria {
-	int page = 0;
-	int pageSize = 20;
-	
-	public int getPage() {
-		return page;
-	}
-	public void setPage(int page) {
-		this.page = page;
-	}
-	public int getPageSize() {
-		return pageSize;
-	}
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
+public class ResponsibilityCriteria extends CriteriaWithPaging {
 
 	private SourceSystem sourceSystem;
     private Long ruleNumber;
 	private ResponsiblePersonType personType;
 	private String person;
+	
+	
+	
+	
+	
 	public SourceSystem getSourceSystem() {
 		return sourceSystem;
 	}

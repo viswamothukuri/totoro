@@ -59,11 +59,21 @@ public class ResponsibilityController {
 	public void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(ResponsiblePersonType.class, new PropertyEditorSupport() {
 			@Override
+			public String getAsText() {
+				return String.valueOf(getValue());
+			}
+			@Override
 			public void setAsText(String text) throws IllegalArgumentException {
 				setValue(ResponsiblePersonType.find(text));
 			}
 		});
 		binder.registerCustomEditor(SourceSystem.class, new PropertyEditorSupport() {
+			
+			@Override
+			public String getAsText() {
+				return String.valueOf(getValue());
+			}
+
 			@Override
 			public void setAsText(String text) throws IllegalArgumentException {
 				setValue(sourceSystemService.get(text));

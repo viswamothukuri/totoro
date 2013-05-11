@@ -13,12 +13,12 @@
 <body>
 
 	<div id="content">
-		<form:form commandName="form" cssClass="form-horizontal well">
+		<form:form commandName="messageSubmissionForm" cssClass="form-horizontal well">
 
 <fieldset>
     <legend>Message Data</legend>
 
-			<c:set var="cssClass"><spring:bind path="form.times"><c:if test="${status.error}">error</c:if></spring:bind></c:set>
+			<c:set var="cssClass"><spring:bind path="times"><c:if test="${status.error}">error</c:if></spring:bind></c:set>
 			<div class="control-group ${cssClass }">
 				<form:label path="data" cssErrorClass="" cssClass="control-label"><fmt:message key="support.message.form.label.times" /></form:label>
 				<div class="controls">
@@ -27,7 +27,7 @@
 				</div>
 			</div>
 		
-			<c:set var="cssClass"><spring:bind path="form.data"><c:if test="${status.error}">error</c:if></spring:bind></c:set>
+			<c:set var="cssClass"><spring:bind path="data"><c:if test="${status.error}">error</c:if></spring:bind></c:set>
 			<div class="control-group ${cssClass }">
 				<form:label path="data" cssErrorClass="" cssClass="control-label"><fmt:message key="support.message.form.label.data" /></form:label>
 				<div class="controls">

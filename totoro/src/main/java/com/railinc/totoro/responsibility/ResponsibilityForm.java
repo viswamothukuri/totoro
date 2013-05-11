@@ -26,7 +26,7 @@ public class ResponsibilityForm {
 	
 	private boolean deleted;
 	
-	private AuditData auditData;
+	private AuditData auditData = new AuditData();
 	
 	private int version;
 	

@@ -10,4 +10,10 @@ public enum YesNo {
 	boolean toBoolean() {
 		return this.e;
 	}
+	public static YesNo fromBoolean(Boolean b) {
+		if (b == null) {
+			return null;
+		}
+		return b.booleanValue() ? Y : N;
+	}
 }

@@ -72,8 +72,8 @@
 					<li class="dropdown ${where.matches('support.*') ? 'active' : '' }"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown"> Support <b class="caret"></b> </a>
 						<ul class="dropdown-menu">
-							<li class="${where.matches('support.sendmessage.*') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/support/message">Send a Message</a>						
-							<li class="${where.matches('support.messagelist.*') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/support/messages">Messages</a>						
+							<li class="${where.matches('support.sendmessage.*') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/support/message/send">Send a Message</a>						
+							<li class="${where.matches('support.messagelist.*') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/support/message">Messages</a>						
 						</ul>
 					</li>
 				</ul>
@@ -124,12 +124,27 @@
 	<script>
 	String.prototype.trim = function() { return this.replace(/^\s+|\s+$/g, ''); }
 	$(function() {
+		$(".btn-search").addClass("btn-inverse");
+		$(".btn-add-new").addClass("btn-success");
 		$("#rail-footer").hover(function() {
 			  $(this).find('#footer-nav').stop(true, true).slideToggle();
 			}, function() {
 				  $(this).find('#footer-nav').stop(true, true).slideToggle();
 			});
 	});
+	function highlightSearchResult(term) {
+		if (term === null || term.length == 0) {
+			return;
+		}
+		$(".highlight-search-result").each(function(idx,element) {
+			var el = $(this);
+			var t = el.text();
+			var pattern = new RegExp("("+term+")", "ig");
+			t = t.replace(pattern,"<span class='label label-info'>$1</span>");
+			el.html(t);
+		});
+		
+	}
 	</script>	
 </body>
 </html>

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.base.Optional;
 import com.railinc.totoro.domain.Responsibility;
 import com.railinc.totoro.util.PagedCollection;
+import com.railinc.totoro.util.PagingResults;
 
 @Service
 @Transactional
@@ -31,17 +32,14 @@ public class ResponsibilityServiceImpl implements ResponsibilityService {
 		
 		
 		c.setProjection(Projections.rowCount());
-		Long count = (Long) c.uniqueResult();
+		int count = ((Long) c.uniqueResult()).intValue();
 		
 		c.setProjection(null);
 		c.setFirstResult(criteria.getPage() * criteria.getPageSize()).setMaxResults(criteria.getPageSize());
 		
 		c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		
-		PagedCollection<Responsibility> paged = new PagedCollection<Responsibility>(c.list());
-		paged.getPaging().setPage(criteria.getPage());
-		paged.getPaging().setPageSize(criteria.getPageSize());
-		paged.getPaging().setTotalCount(count.intValue());
+		PagedCollection<Responsibility> paged = new PagedCollection<Responsibility>(c.list(), new PagingResults(criteria, count));
 		return paged;
 	}
 
