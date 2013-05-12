@@ -12,7 +12,7 @@
 
 	<properties>
 		<BUILD_NUMBER>RELEASE</BUILD_NUMBER>
-		<spring.version>3.0.7.RELEASE</spring.version>
+		<spring.version>3.2.2.RELEASE</spring.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 

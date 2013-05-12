@@ -4,13 +4,12 @@ import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -99,11 +98,17 @@ public class DataException {
 	private Long id;
 	
 	
-
 	@ManyToOne(optional=false)
 	@JoinColumn(name="MSG_ID", nullable=false)
 	private RawInboundMessage source;
 
+	/**
+	 * so, we need to determine who is reponsibile for a data exception.  this may not be the 
+	 * person who ultimately handles the exception, but we must identify the person
+	 * so that we can build tasks from the data exceptions.  
+	 */
+	@Embedded
+	private ResponsiblePersonType responsiblePerson;
 	
 	@ManyToOne(optional=true)
 	@JoinColumn(name="TASK_ID", nullable=true)

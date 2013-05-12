@@ -31,17 +31,31 @@ public class Responsibility implements SoftDelete, Auditable {
 	@JoinColumn(name="SS_ID", nullable=true)
 	SourceSystem sourceSystem;
 
-	@Basic
-	@Column(name="RULE_NUM",nullable=false)
-    private Long ruleNumber;
+	public boolean isDefaultSourceSystemMatch() {
+		return sourceSystem == null;
+	}
+	
+	/**
+	 * i hesitate to do it like this, but it feels like a string column
+	 * will give us something easier to deal with programatically than multiple 
+	 * database columns...
+	 */
+	@Basic(optional=true)
+	@Column(name="RULE_NUM",nullable=true)
+    private String ruleNumber;
+	
+	public boolean matches(Long rulenumber) {
+		if (isDefaultRuleNumberMatch()) { return true; }
+		throw new RuntimeException("Not implementd");
+	}
+	
+	public boolean isDefaultRuleNumberMatch() {
+		return ruleNumber == null;
+	}
 
 	
-	@Column(name="RESP_PERSON_TYPE",nullable=false)
-	@Enumerated(EnumType.STRING)
-	private ResponsiblePersonType responsiblePersonType;
-
-	@Column(name="RESP_PERSON_ID",nullable=true,length=100)
-	private String responsiblePersonId;
+	@Embedded
+	private Identity responsiblePerson = new Identity();
 
 	
 	@Embedded
@@ -83,33 +97,47 @@ public class Responsibility implements SoftDelete, Auditable {
 	}
 
 
-	public Long getRuleNumber() {
+	public String getRuleNumber() {
 		return ruleNumber;
 	}
 
 
-	public void setRuleNumber(Long ruleNumber) {
+	public void setRuleNumber(String ruleNumber) {
 		this.ruleNumber = ruleNumber;
 	}
 
 
-	public ResponsiblePersonType getResponsiblePersonType() {
-		return responsiblePersonType;
+	
+	public Identity getResponsiblePerson() {
+		return responsiblePerson;
 	}
 
 
-	public void setResponsiblePersonType(ResponsiblePersonType responsiblePersonType) {
-		this.responsiblePersonType = responsiblePersonType;
+	public void setResponsiblePerson(Identity value) {
+		if (responsiblePerson == null) {
+			value = new Identity();
+		}
+		this.responsiblePerson = value;
+	}
+
+
+	public ResponsiblePersonType getResponsiblePersonType() {
+		return responsiblePerson.getResponsiblePersonType();
+	}
+
+
+	public void setResponsiblePersonType(ResponsiblePersonType value) {
+		responsiblePerson.setResponsiblePersonType(value);
 	}
 
 
 	public String getResponsiblePersonId() {
-		return responsiblePersonId;
+		return responsiblePerson.getResponsiblePersonId();
 	}
 
 
 	public void setResponsiblePersonId(String responsiblePersonId) {
-		this.responsiblePersonId = responsiblePersonId;
+		this.responsiblePerson.setResponsiblePersonId(responsiblePersonId);
 	}
 
 

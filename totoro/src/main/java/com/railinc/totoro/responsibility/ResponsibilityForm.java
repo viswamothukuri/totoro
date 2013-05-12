@@ -3,6 +3,7 @@ package com.railinc.totoro.responsibility;
 import static org.apache.commons.lang.StringUtils.trimToNull;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import com.railinc.totoro.domain.AuditData;
 import com.railinc.totoro.domain.ResponsiblePersonType;
@@ -13,11 +14,11 @@ public class ResponsibilityForm {
 	@NotNull
 	private Long id;
 
-	@NotNull
 	SourceSystem sourceSystem;
 
 	@NotNull
-    private Long ruleNumber;
+	@Pattern(regexp="\\*|-?\\d+,-?\\d+")
+    private String ruleNumber;
 
 	@NotNull
 	private ResponsiblePersonType personType;
@@ -77,11 +78,11 @@ public class ResponsibilityForm {
 		this.sourceSystem = sourceSystem;
 	}
 
-	public Long getRuleNumber() {
+	public String getRuleNumber() {
 		return ruleNumber;
 	}
 
-	public void setRuleNumber(Long ruleNumber) {
+	public void setRuleNumber(String ruleNumber) {
 		this.ruleNumber = ruleNumber;
 	}
 

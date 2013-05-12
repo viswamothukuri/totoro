@@ -43,7 +43,13 @@ public class SourceSystem implements Auditable, SoftDelete {
 	@Column(name="DELETED",nullable=false,updatable=true,length=1)
 	private YesNo deleted = YesNo.N;
 	
-	
+
+	public SourceSystem(){}
+	public SourceSystem(String id, String name2) {
+		setIdentifier(id);
+		setName(name2);
+	}
+
 	public Integer getVersion() {
 		return version;
 	}
