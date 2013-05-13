@@ -1,5 +1,7 @@
 package com.railinc.totoro.sourcesystem;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -7,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.railinc.totoro.domain.SourceSystem;
+import com.railinc.totoro.util.WebFormConstants;
 import com.railinc.totoro.web.FlashMessages;
 
 @Controller
@@ -22,6 +27,11 @@ public class SourceSystemController {
 
 	@Autowired
 	private SourceSystemService service;
+	
+	@InitBinder
+	public void initBinder(WebDataBinder b) {
+		b.registerCustomEditor(Date.class, WebFormConstants.timestampPropertyEditor());
+	}
 	
 	
 	@RequestMapping(value="/list",method=RequestMethod.GET)
@@ -107,6 +117,10 @@ public class SourceSystemController {
 
 	@RequestMapping(value="/{id}",method=RequestMethod.POST,params="_save")
 	public String submitEditForm(HttpServletRequest request, @ModelAttribute("sourcesystem") @Valid SourceSystemForm form, BindingResult result, @PathVariable("id") String id) {
+		if (result.hasErrors()) {
+			return "sourcesystem/edit";
+		}
+		
 		SourceSystem ss = this.service.get(id);
 		ss.setName(form.getName());
 		this.service.save(ss);

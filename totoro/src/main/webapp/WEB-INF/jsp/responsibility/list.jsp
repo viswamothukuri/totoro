@@ -11,20 +11,28 @@
 		<form:form commandName="responsibilitysearch" cssClass="form-inline" method="POST">
 				<form:label path="query">Search</form:label>
 				<form:input path="query"/>
+				<script>
+				$(function() {
+					highlightSearchResult($("#query").attr("value"));
+				});
+				</script>
 				
-			    <form:label path="criteria.sourceSystem">Source System</form:label>
-			    <form:select path="criteria.sourceSystem">
-			    	<form:option value="" label="- Any -"/>
+				
+			    <form:label path="sourceSystem">Source System</form:label>
+			    <form:select path="sourceSystem">
+			    	<spring:message var="any" code="defaults.searchform.criteria.dropdown.any" />
+			    	<form:option value="" label="${any }"/>
 			    	<form:options items="${sourceSystems }" itemValue="identifier" itemLabel="name"/>
 			    </form:select>
-			    <form:label path="criteria.personType">Type</form:label>
-			    <form:select path="criteria.personType">
-			    	<form:option value="" label="- Any -"/>
+			    <form:label path="personType">Type</form:label>
+			    <form:select path="personType">
+			    	<spring:message var="any" code="defaults.searchform.criteria.dropdown.any" />
+			    	<form:option value="" label="${any }"/>
 					<form:options items="${personTypes }"/>
 			    </form:select>
 			    
 			    <input type="submit" class="btn btn-search" value="Search"/>
-			    <input type="button" class="btn btn-reset" value="Reset" onclick="$('#q').attr('value','');this.form.submit();"/>
+			    <input type="button" class="btn btn-reset" value="Reset" onclick="$('#query').val('');$('#personType').val('');$('#sourceSystem').val('');this.form.submit();"/>
 		  		<a class="btn btn-add-new" href="${pageContext.request.contextPath }/admin/responsibility/new"><i class="icon-plus"></i> <fmt:message key="responsibility.list.actions.addnew"/></a>
 		
 	
@@ -64,8 +72,8 @@
 				<tr>
 					<th><fmt:message key="responsibility.list.th.sourcesystem"/></th>
 					<th><fmt:message key="responsibility.list.th.rulenumber"/></th>
-					<th><fmt:message key="responsibility.list.th.status"/></th>
 					<th><fmt:message key="responsibility.list.th.assignmenttype"/></th>
+					<th><fmt:message key="responsibility.list.th.status"/></th>
 					<th><fmt:message key="responsibility.list.th.updater"/></th>
 					<th class="p_actions"><fmt:message key="responsibility.list.th.actions"/></th>
 				</tr>
@@ -73,9 +81,28 @@
 			<tbody>
 				<c:forEach items="${responsibilitysearch.results }" var="r">
 					<tr id="ss_${r.id }" class="${r.deleted ? 'warning' : '' }">
-						<td class="">${r.sourceSystem.name  }</td>
-						<td class="">${r.ruleNumber }</td>
-						<td class="">${r.personType.toString() }</td>
+						<td class="">
+						<c:choose>
+							<c:when test="${empty r.sourceSystem }">
+								<span class="label label-inverse">default</span>
+							</c:when>
+							<c:otherwise>
+								${r.sourceSystem.name }
+							</c:otherwise>
+						</c:choose>
+						
+						</td>
+						<td>
+						<c:choose>
+							<c:when test="${empty r.ruleNumber }">
+								<span class="label label-inverse">default</span>
+							</c:when>
+							<c:otherwise>
+								<span  class="highlight-search-result">${r.ruleNumber }</span>
+							</c:otherwise>
+						</c:choose>
+						</td>
+						<td>${r.personType.toString() } (<span class="highlight-search-result">${r.person }</span>)</td>
 						<td class="p_deleted">
 						<c:if test="${r.deleted }">
 						<span class="label label-warning"><fmt:message key="responsibility.list.td.status.deleted"/></span>

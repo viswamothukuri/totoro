@@ -7,6 +7,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.apache.commons.lang.StringUtils.equalsIgnoreCase;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Basic;
@@ -59,10 +60,11 @@ public class UserGroup implements SoftDelete, Auditable {
 	private YesNo deleted = YesNo.N;
 
 	@OneToMany(mappedBy="userGroup",fetch=FetchType.EAGER,cascade=CascadeType.ALL,orphanRemoval=true) // have to have cascade all here or child objects dont' save
-	private Set<UserGroupMember> members;
+	private Set<UserGroupMember> members = new HashSet<UserGroupMember>();
 	
 	
 	public Set<UserGroupMember> getMembers() {
+
 		return members;
 	}
 

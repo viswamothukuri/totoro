@@ -8,6 +8,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.railinc.totoro.domain.InboundSource;
 import com.railinc.totoro.domain.YesNo;
+import com.railinc.totoro.util.CriteriaValue;
 import com.railinc.totoro.util.CriteriaWithPaging;
 
 public class MessageSearchCriteria extends CriteriaWithPaging {
@@ -17,42 +18,48 @@ public class MessageSearchCriteria extends CriteriaWithPaging {
 	 */
 	private static final long serialVersionUID = 4907077624454865906L;
 
-	private Collection<String> data = new ArrayList<String>();
-	private Collection<InboundSource> sources = new ArrayList<InboundSource>();
-	private Boolean processed = null; // null means ignore the criteria.
+	private CriteriaValue<ArrayList<String>> data = CriteriaValue.unspecified();
+	private CriteriaValue<ArrayList<InboundSource>> sources = CriteriaValue.unspecified();
+	private CriteriaValue<YesNo> processed = CriteriaValue.unspecified();
+	
 	
 	public void setProcessed(boolean b) {
-		this.processed = b;
+		this.processed = CriteriaValue.of(YesNo.fromBoolean(b));
 	}
+	
 	public void addData(String s) {
 		if (StringUtils.isNotBlank(s)) {
-			data.add(s);
+			if (data.isUnspecifiedOrNull()) {
+				data = CriteriaValue.of(new ArrayList<String>());
+			}
+			data.value().add(s);
 		}
 	}
 	public void addInboundSource(InboundSource s) {
 		if (s != null) {
-			sources.add(s);
+			if (sources.isUnspecifiedOrNull()) {
+				sources = CriteriaValue.of(new ArrayList<InboundSource>());
+			}
+			sources.value().add(s);
 		}
 	}
-	public boolean hasInboundSourceCriteria() {
-		return ! sources.isEmpty();
+	
+	
+	public CriteriaValue<ArrayList<String>> getData() {
+		return data;
 	}
-	public boolean hasDataCriteria() {
-		return ! data.isEmpty();
+
+	public CriteriaValue<ArrayList<InboundSource>> getSources() {
+		return sources;
 	}
+
 	public boolean hasProcessedCriteria() {
-		return processed != null;
-	}
-	public Collection<InboundSource> getInboundSourceCriteria() {
-		return Collections.unmodifiableCollection(this.sources);
+		return processed.isSpecified();
 	}
 	
-	public Collection<String> getDataCriteria() {
-		return Collections.unmodifiableCollection(this.data);
+	public CriteriaValue<YesNo> getProcessed() {
+		return processed;
 	}
-	
-	public YesNo getProcessedCriteria() {
-		return YesNo.fromBoolean(this.processed);
-	}
+
 	
 }

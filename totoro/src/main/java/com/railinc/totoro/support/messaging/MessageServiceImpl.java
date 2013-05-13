@@ -33,19 +33,30 @@ public class MessageServiceImpl implements MessageService {
 		criteria = Optional.fromNullable(criteria).or(new MessageSearchCriteria());
 		
 		Criteria c = sessionFactory.getCurrentSession().createCriteria(RawInboundMessage.class);
-		if (criteria.hasInboundSourceCriteria()) {
-			c.add(Restrictions.in(RawInboundMessage.PROPERTY_INBOUND_SOURCE, criteria.getInboundSourceCriteria()));
+		
+		
+		
+		if (criteria.getSources().isSpecifiedAndNotNull()) {
+			c.add(Restrictions.in(RawInboundMessage.PROPERTY_INBOUND_SOURCE, criteria.getSources().value()));
+		} else if (criteria.getSources().isSpecifiedAndNull()) {
+			c.add(Restrictions.isNull(RawInboundMessage.PROPERTY_INBOUND_SOURCE));
 		}
-		if (criteria.hasProcessedCriteria()) {
-			c.add(Restrictions.eq(RawInboundMessage.PROPERTY_INBOUND_PROCESSED, criteria.getProcessedCriteria()));
+		
+		if (criteria.getProcessed().isSpecifiedAndNotNull()) {
+			c.add(Restrictions.eq(RawInboundMessage.PROPERTY_INBOUND_PROCESSED, criteria.getProcessed().value()));
+		} else if (criteria.getProcessed().isSpecifiedAndNull()) {
+			c.add(Restrictions.isNull(RawInboundMessage.PROPERTY_INBOUND_PROCESSED));
 		}
-		if (criteria.hasDataCriteria()) {
+		
+		if (criteria.getData().isSpecifiedAndNotNull()) {
 			Criterion root = null;
-			for (String s : criteria.getDataCriteria()) {
+			for (String s : criteria.getData().value()) {
 				Criterion ilike = Restrictions.ilike(RawInboundMessage.PROPERTY_INBOUND_DATA, s , MatchMode.ANYWHERE);
 				if (root == null) { root = ilike; } else { root = Restrictions.or(root, ilike);}
 			}
 			c.add(root);
+		} else if (criteria.getData().isSpecifiedAndNull()) {
+			c.add(Restrictions.isNull(RawInboundMessage.PROPERTY_INBOUND_DATA));
 		}
 		
 		c.setProjection(Projections.rowCount());

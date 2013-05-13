@@ -26,16 +26,11 @@ public class MessageSearchForm extends PagedSearchForm<MessageSearchCriteria, Me
 	private String query;
 	private Boolean processed;
 
-	
-	@Override
-	protected MessageSearchCriteria newCriteria() {
-		return new MessageSearchCriteria();
-	}
 
 	
 	@Override
 	public MessageSearchCriteria getCriteria() {
-		MessageSearchCriteria c = super.getCriteria();
+		MessageSearchCriteria c = new MessageSearchCriteria();
 		// build up the criteria from the fields
 		if (processed != null) {
 			c.setProcessed(this.processed);
@@ -76,13 +71,11 @@ public class MessageSearchForm extends PagedSearchForm<MessageSearchCriteria, Me
 	
 	public Collection<String> getSourceOptions() {
 		List<InboundSource> asList = Arrays.asList(InboundSource.values());
-		List<String> options =new ArrayList<String>(Lists.transform(asList, Functions.toStringFunction()));
-		options.add(0, "");
-		return options;
+		return Lists.transform(asList, Functions.toStringFunction());
 	}
 	
 	public Collection<String> getProcessedOptions() {
-		return Arrays.asList(new String[]{"","Yes","No"});
+		return Arrays.asList(new String[]{"Yes","No"});
 	}
 	
 	public static final void initBinder(WebDataBinder binder) {

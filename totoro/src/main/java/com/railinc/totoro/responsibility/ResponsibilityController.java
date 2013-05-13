@@ -5,6 +5,7 @@ import static com.google.common.collect.Collections2.transform;
 import java.beans.PropertyEditorSupport;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -21,11 +22,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.common.base.Function;
+import com.railinc.totoro.domain.IdentityType;
 import com.railinc.totoro.domain.Responsibility;
-import com.railinc.totoro.domain.ResponsiblePersonType;
 import com.railinc.totoro.domain.SourceSystem;
 import com.railinc.totoro.sourcesystem.SourceSystemService;
 import com.railinc.totoro.util.PagedCollection;
+import com.railinc.totoro.util.WebFormConstants;
 import com.railinc.totoro.web.FlashMessages;
 
 @Controller
@@ -51,22 +53,17 @@ public class ResponsibilityController {
 			f.setRuleNumber(arg0.getRuleNumber());
 			f.setSourceSystem(arg0.getSourceSystem());
 			f.setVersion(arg0.getVersion());
+			f.setNote(arg0.getNote().getText());
 			return f;
 		}
 	};
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-		binder.registerCustomEditor(ResponsiblePersonType.class, new PropertyEditorSupport() {
-			@Override
-			public String getAsText() {
-				return String.valueOf(getValue());
-			}
-			@Override
-			public void setAsText(String text) throws IllegalArgumentException {
-				setValue(ResponsiblePersonType.find(text));
-			}
-		});
+		binder.registerCustomEditor(Date.class, WebFormConstants.timestampPropertyEditor());
+		
+		binder.registerCustomEditor(IdentityType.class, WebFormConstants.identityTypeEditor());
+		
 		binder.registerCustomEditor(SourceSystem.class, new PropertyEditorSupport() {
 			
 			@Override
@@ -88,9 +85,9 @@ public class ResponsibilityController {
 	
 	@ModelAttribute("personTypes")
 	public Collection<String> personTypes() {
-		return transform(Arrays.asList(ResponsiblePersonType.values()), new Function<ResponsiblePersonType,String>(){
+		return transform(Arrays.asList(IdentityType.values()), new Function<IdentityType,String>(){
 			@Override
-			public String apply(ResponsiblePersonType input) {
+			public String apply(IdentityType input) {
 				return input.toString();
 			}});
 	}
@@ -127,6 +124,7 @@ public class ResponsibilityController {
 		ss.setRuleNumber(form.getRuleNumber());
 		ss.setSourceSystem(form.getSourceSystem());
 		ss.setResponsiblePersonType(form.getPersonType());
+		ss.setNoteText(form.getNote());
 		service.save(ss);
 		
 		FlashMessages.add(request, "responsibility.succesfullyadded", 
@@ -181,12 +179,17 @@ public class ResponsibilityController {
 	}
 
 	@RequestMapping(value="/{id}",method=RequestMethod.POST,params="_save")
-	public String submitEditForm(HttpServletRequest request, @ModelAttribute("responsibility") @Valid ResponsibilityForm form, BindingResult result, @PathVariable("id") Long id) {
+	public String submitEditForm(HttpServletRequest request, @Valid @ModelAttribute("responsibility") ResponsibilityForm form, BindingResult result, @PathVariable("id") Long id) {
+		if (result.hasErrors()) {
+			return "responsibility/edit";
+		}
+		
 		Responsibility ss = this.service.get(id);
 		ss.setSourceSystem(form.getSourceSystem());
 		ss.setRuleNumber(form.getRuleNumber());
 		ss.setResponsiblePersonId(form.getPerson());
 		ss.setResponsiblePersonType(form.getPersonType());
+		ss.setNoteText(form.getNote());
 		this.service.save(ss);
 		
 		FlashMessages.add(request, "responsibility.succesfullyupdated", 

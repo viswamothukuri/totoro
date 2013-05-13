@@ -19,10 +19,14 @@
 				
 			    <form:label path="source">Source</form:label>
 			    <form:select path="source">
+			    	<spring:message var="any" code="defaults.searchform.criteria.dropdown.any" />
+			    	<form:option value="" label="${any }"/>
 			    	<form:options items="${messageSearchForm.sourceOptions }" />
 			    </form:select>
 			    <form:label path="processed">Processed</form:label>
 			    <form:select path="processed">
+			    	<spring:message var="any" code="defaults.searchform.criteria.dropdown.any" />
+			    	<form:option value="" label="${any }"/>
 					<form:options items="${messageSearchForm.processedOptions }"/>
 			    </form:select>
 			    

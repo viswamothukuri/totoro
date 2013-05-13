@@ -2,6 +2,8 @@ package com.railinc.totoro.usergroup;
 
 import static com.google.common.collect.Collections2.transform;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.google.common.base.Function;
 import com.railinc.totoro.domain.UserGroup;
 import com.railinc.totoro.domain.UserGroupMember;
+import com.railinc.totoro.util.WebFormConstants;
 import com.railinc.totoro.web.FlashMessages;
 
 @Controller
@@ -42,6 +47,11 @@ public class UserGroupController {
 			return f;
 		}
 	};
+	
+	@InitBinder
+	public void initBinder(WebDataBinder b) {
+		b.registerCustomEditor(Date.class, WebFormConstants.timestampPropertyEditor());
+	}
 	
 
 	@RequestMapping(value="/list",method=RequestMethod.GET)
@@ -129,6 +139,9 @@ public class UserGroupController {
 
 	@RequestMapping(value="/{id}",method=RequestMethod.POST,params="_save")
 	public String submitEditForm(HttpServletRequest request, @ModelAttribute("usergroup") @Valid UserGroupForm form, BindingResult result, @PathVariable("id") String id) {
+		if (result.hasErrors()) {
+			return "usergroup/edit";
+		}
 		UserGroup ss = this.service.get(id);
 		ss.setName(form.getName());
 		ss.setUserIds(form.getUserIds());

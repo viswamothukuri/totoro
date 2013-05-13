@@ -2,11 +2,17 @@ package com.railinc.totoro.responsibility;
 
 import static org.apache.commons.lang.StringUtils.trimToNull;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.railinc.totoro.domain.AuditData;
-import com.railinc.totoro.domain.ResponsiblePersonType;
+import com.railinc.totoro.domain.IdentityType;
+import com.railinc.totoro.domain.Note;
+import com.railinc.totoro.domain.Responsibility;
 import com.railinc.totoro.domain.SourceSystem;
 
 public class ResponsibilityForm {
@@ -14,18 +20,22 @@ public class ResponsibilityForm {
 	@NotNull
 	private Long id;
 
-	SourceSystem sourceSystem;
+	private SourceSystem sourceSystem;
 
-	@NotNull
-	@Pattern(regexp="\\*|-?\\d+,-?\\d+")
+	@Min(1)
+	@Max(Responsibility.MAX_LENGTH_RULENUMBER)
+	@Pattern(regexp="-?\\d+,-?\\d+")//,message="Must be either blank or a numeric range like 1,3"
     private String ruleNumber;
 
 	@NotNull
-	private ResponsiblePersonType personType;
+	private IdentityType personType;
 
 	private String person;
 	
 	private boolean deleted;
+	
+	@Max(value=Note.MAX_LENGTH_NOTES)
+	private String note;
 	
 	private AuditData auditData = new AuditData();
 	
@@ -46,6 +56,14 @@ public class ResponsibilityForm {
 	
 	
 	
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = StringUtils.trimToNull(note);
+	}
+
 	public boolean isDeleted() {
 		return deleted;
 	}
@@ -83,14 +101,14 @@ public class ResponsibilityForm {
 	}
 
 	public void setRuleNumber(String ruleNumber) {
-		this.ruleNumber = ruleNumber;
+		this.ruleNumber = StringUtils.trimToNull(ruleNumber);
 	}
 
-	public ResponsiblePersonType getPersonType() {
+	public IdentityType getPersonType() {
 		return personType;
 	}
 
-	public void setPersonType(ResponsiblePersonType personType) {
+	public void setPersonType(IdentityType personType) {
 		this.personType = personType;
 	}
 

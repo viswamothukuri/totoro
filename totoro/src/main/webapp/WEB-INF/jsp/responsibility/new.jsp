@@ -22,7 +22,11 @@
 			<div class="control-group ${cssClass }">
 				<form:label path="id" cssErrorClass="control-label" cssClass="control-label"><fmt:message key="responsibility.form.label.sourceSystem" /></form:label>
 				<div class="controls">
+				
 					<form:select path="sourceSystem" cssErrorClass="error">
+				    	<spring:message var="any" code="responsibility.sourcesystem.useasdefault" text=" - use as default - "/>
+				    	<form:option value="" label="${any }"/>
+					
 				    	<form:options items="${sourceSystems }" itemValue="identifier" itemLabel="name"/>
 		    		</form:select>
 					<form:errors element="span" cssClass="help-inline" path="sourceSystem"/>
@@ -65,6 +69,14 @@
 				</div>
 			</div>
 
+			<c:set var="cssClass"><spring:bind path="responsibility.note"><c:if test="${status.error}">error</c:if></spring:bind></c:set>
+			<div class="control-group ${cssClass }">
+				<form:label path="id" cssErrorClass="control-label" cssClass="control-label"><fmt:message key="responsibility.form.label.note" /></form:label>
+				<div class="controls">
+					<form:textarea path="note" cssErrorClass="input-xlarge error" cssClass="input-xlarge" rows="4" cols="120"/>
+					<form:errors element="span" cssClass="help-inline" path="note"/>
+				</div>
+			</div>
 			
 				
 			

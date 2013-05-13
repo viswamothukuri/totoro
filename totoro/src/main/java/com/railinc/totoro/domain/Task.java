@@ -63,8 +63,8 @@ public class Task {
 	
 	@Embedded
 	@AttributeOverrides( {
-        @AttributeOverride(name="responsiblePersonType", column = @Column(name="CAND_RESP_PERSON_TYPE") ),
-        @AttributeOverride(name="responsiblePersonId", column = @Column(name="CAND_RESP_PERSON_ID") )
+        @AttributeOverride(name="type", column = @Column(name="CAND_RESP_PERSON_TYPE") ),
+        @AttributeOverride(name="id", column = @Column(name="CAND_RESP_PERSON_ID") )
 	} )
 	private Identity candidate;
 	
@@ -73,8 +73,8 @@ public class Task {
 	 */
 	@Embedded
 	@AttributeOverrides( {
-        @AttributeOverride(name="responsiblePersonType", column = @Column(name="ASSN_RESP_PERSON_TYPE") ),
-        @AttributeOverride(name="responsiblePersonId", column = @Column(name="ASSN_RESP_PERSON_ID") )
+        @AttributeOverride(name="type", column = @Column(name="ASSN_RESP_PERSON_TYPE") ),
+        @AttributeOverride(name="id", column = @Column(name="ASSN_RESP_PERSON_ID") )
 	} )
 	private Identity assignee;
 	

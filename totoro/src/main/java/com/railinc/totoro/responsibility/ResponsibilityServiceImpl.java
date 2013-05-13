@@ -2,6 +2,7 @@ package com.railinc.totoro.responsibility;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,45 @@ public class ResponsibilityServiceImpl implements ResponsibilityService {
 		criteria = Optional.fromNullable(criteria).or(new ResponsibilityCriteria());
 		
 		Criteria c = sessionFactory.getCurrentSession().createCriteria(Responsibility.class);
+
 		
-		if (criteria.getSourceSystem() != null) {
-			c.add(Restrictions.eq("sourceSystem", criteria.getSourceSystem()));
+		if (criteria.getFreeText().isSpecifiedAndNotNull()) {
+			String ft = criteria.getFreeText().value();
+			
+			c.add(
+				Restrictions.or(
+						Restrictions.ilike(Responsibility.PROPERTY_RESPONSIBLE_PERSON_ID, ft, MatchMode.ANYWHERE),
+						Restrictions.ilike(Responsibility.PROPERTY_RULENUMBER, ft, MatchMode.ANYWHERE)
+				)
+			);
 		}
+
+		
+		if (criteria.getPerson().isSpecifiedAndNotNull()) {
+			c.add(Restrictions.eq(Responsibility.PROPERTY_RESPONSIBLE_PERSON_ID, criteria.getPerson().value()));
+		} else if (criteria.getPerson().isSpecifiedAndNull()) {
+			c.add(Restrictions.isNull(Responsibility.PROPERTY_RESPONSIBLE_PERSON_ID));
+		}
+
+		if (criteria.getPersonType().isSpecifiedAndNotNull()) {
+			c.add(Restrictions.eq(Responsibility.PROPERTY_RESPONSIBLE_PERSON_TYPE, criteria.getPersonType().value()));
+		} else if (criteria.getPersonType().isSpecifiedAndNull()) {
+			c.add(Restrictions.isNull(Responsibility.PROPERTY_RESPONSIBLE_PERSON_TYPE));
+		}
+
+		if (criteria.getRuleNumber().isSpecifiedAndNotNull()) {
+			c.add(Restrictions.eq(Responsibility.PROPERTY_RULENUMBER, criteria.getRuleNumber().value()));
+		} else if (criteria.getRuleNumber().isSpecifiedAndNull()) {
+			c.add(Restrictions.isNull(Responsibility.PROPERTY_RULENUMBER));
+		}
+
+		if (criteria.getSourceSystem().isSpecifiedAndNotNull()) {
+			c.add(Restrictions.eq(Responsibility.PROPERTY_SOURCESYSTEM, criteria.getSourceSystem().value()));
+		} else if (criteria.getSourceSystem().isSpecifiedAndNull()) {
+			c.add(Restrictions.isNull(Responsibility.PROPERTY_SOURCESYSTEM));
+		}
+
+		
 		
 		
 		c.setProjection(Projections.rowCount());

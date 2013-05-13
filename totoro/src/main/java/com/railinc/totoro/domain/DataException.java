@@ -108,7 +108,7 @@ public class DataException {
 	 * so that we can build tasks from the data exceptions.  
 	 */
 	@Embedded
-	private ResponsiblePersonType responsiblePerson;
+	private IdentityType responsiblePerson;
 	
 	@ManyToOne(optional=true)
 	@JoinColumn(name="TASK_ID", nullable=true)
