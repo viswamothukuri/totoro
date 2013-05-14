@@ -142,6 +142,7 @@
 	<modules>
 		<module>drivers</module>
 		<module>totoro</module>
+		<module>cucumber</module>
 	</modules>
 
 	<build>
