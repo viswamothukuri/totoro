@@ -20,6 +20,7 @@ public class SourceSystem implements Auditable, SoftDelete {
 
 	public static final String PROPERTY_ID = "identifier";
 	public static final String PROPERTY_NAME = "name";
+	public static final String PROPERTY_OUTBOUND_QUEUE = "outboundQueue";
 	public static final String PROPERTY_DELETED = "deleted";
 	public static final String DEFAULT_ORDER_BY_PROPERTY = PROPERTY_ID;
 	
@@ -34,6 +35,11 @@ public class SourceSystem implements Auditable, SoftDelete {
 	@Basic
 	@Column(name="NAME")
 	private String name;
+	
+	@Basic
+	@Column(name="OUTBOUND_QUEUE")
+	private String outboundQueue;
+	
 
 	@Embedded
 	private AuditData audit = new AuditData();
@@ -141,6 +147,12 @@ public class SourceSystem implements Auditable, SoftDelete {
 		return "SourceSystem [identifier=" + identifier + ", version="
 				+ version + ", name=" + name + ", audit=" + audit
 				+ ", deleted=" + deleted + "]";
+	}
+	public String getOutboundQueue() {
+		return outboundQueue;
+	}
+	public void setOutboundQueue(String outboundQueue) {
+		this.outboundQueue = outboundQueue;
 	}
 	
 	
