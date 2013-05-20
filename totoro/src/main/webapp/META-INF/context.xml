@@ -1,12 +1,17 @@
 <Context>
+    <ResourceLink global="jdbc/totoroDataSource" name="jdbc/totoroDataSource"/>
+    <ResourceLink name="env/totoroSchema" global="env/totoroSchema" type="java.lang.String"/>
+    
+    
+    <ResourceLink name="env/hibernateDialect" global="env/hibernateDialect" type="java.lang.String" />
+    <ResourceLink name="env/hibernateShowSql" global="env/hibernateShowSql" type="java.lang.String" />
+    <ResourceLink name="env/hibernateHbm2ddlAuto" global="env/hibernateHbm2ddlAuto" type="java.lang.String"  />
 	<!-- 
     <ResourceLink global="jdbc/ssoDataSource" name="jdbc/ssoDataSource"/>
+    <ResourceLink global="jdbc/ssoDataSource" name="jdbc/ssoDataSource"/>
     <ResourceLink global="mail/ssoMailSession" name="mail/ssoMailSession"/>
-    
     <ResourceLink global="controlM.ConnectionFactory" name="controlM.ConnectionFactory"/>
     <ResourceLink global="controlM.RequestQueue" name="controlM.RequestQueue"/>
 	<ResourceLink global="controlM.ResponseQueue" name="controlM.ResponseQueue"/>
-    
-    <ResourceLink name="schema" global="schema" type="java.lang.String"/>
      -->
 </Context>

@@ -1,0 +1,27 @@
+<GlobalNamingResources>
+
+		<!--  
+		the following hibernate params are all optional. they shoudl default to oracle 
+		based values if missing (see spring-totoro-jndi.xml)
+		 -->
+    	<Environment name="env/hibernateDialect" type="java.lang.String" value="org.hibernate.dialect.MySQL5Dialect" />
+    	<Environment name="env/totoroSchema" type="java.lang.String" value="totoro"/>
+    	<Environment name="env/hibernateShowSql" type="java.lang.String" value="true" />
+    	<Environment name="env/hibernateHbm2ddlAuto" type="java.lang.String" value="update" />
+    
+		<Resource auth="Container" defaultAutoCommit="false"
+			defaultReadOnly="false" fairQueue="true" jmxEnabled="true"
+			logAbandoned="true" removeAbandoned="true" testOnBorrow="true"
+			testOnReturn="false" testWhileIdle="true" initialSize="1" minIdle="1"
+			maxActive="5" maxIdle="1" maxWait="5000" minEvictableIdleTimeMillis="5000"
+			removeAbandonedTimeout="1200" timeBetweenEvictionRunsMillis="5000"
+			validationInterval="30000" type="javax.sql.DataSource" 
+			driverClassName="com.mysql.jdbc.Driver"
+			name="jdbc/totoroDataSource" 
+			username="totoro" password="totoro"
+			url="jdbc:mysql://localhost:3306/totoro" 
+			validationQuery="select 1 from dual" />
+
+
+
+</GlobalNamingResources>

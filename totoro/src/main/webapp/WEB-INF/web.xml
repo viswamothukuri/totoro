@@ -7,7 +7,12 @@
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/totoro-context.xml</param-value>
+		<param-value>
+			/WEB-INF/spring-totoro-jndi.xml
+			classpath:spring-totoro-hibernate.xml
+			classpath:spring-totoro-context.xml
+			classpath:spring-totoro-si-main.xml
+		</param-value>
 	</context-param>
 
 	<listener>
@@ -15,13 +20,13 @@
 	</listener>
 
 	<servlet>
-		<servlet-name>dispatcher</servlet-name>
+		<servlet-name>spring-dispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>dispatcher</servlet-name>
+		<servlet-name>spring-dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
