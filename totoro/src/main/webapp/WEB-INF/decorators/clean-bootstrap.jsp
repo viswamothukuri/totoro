@@ -59,7 +59,7 @@
 			<div class="navbar-inner">
 <!-- 				<a class="brand" href="#"><decorator:title/></a> -->
 				<ul class="nav">
-					<li class="${where.contains('home') ? 'active' : '' }"><a
+					<li class="${where.startsWith('home') ? 'active' : '' }"><a
 						href="${pageContext.request.contextPath }/">Home</a></li>
 					<li class="dropdown ${where.contains('admin') ? 'active' : '' }"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown"> Admin <b class="caret"></b> </a>
@@ -73,7 +73,14 @@
 						data-toggle="dropdown"> Support <b class="caret"></b> </a>
 						<ul class="dropdown-menu">
 							<li class="${where.matches('support.sendmessage.*') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/support/message/send">Send a Message</a>						
-							<li class="${where.matches('support.messagelist.*') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/support/message">Messages</a>						
+							<li class="${where.matches('support.messagelist.*') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/support/message">Messages</a>
+							
+							<li class="${where.matches('support.home') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/support">Support Home</a>
+							<li class="${where.matches('support.properties') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/support/properties">JVM Properties</a>
+							<li class="${where.matches('support.snoop') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/support/snoop">Request Snoop</a>
+
+							<li class="${where.matches('support.logging') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/support/logging">Logging</a>
+							<li class="${where.matches('support.jmx') ? 'active' : '' }"><a href="${ pageContext.request.contextPath }/support/jmx">JMX Console</a>
 						</ul>
 					</li>
 				</ul>
