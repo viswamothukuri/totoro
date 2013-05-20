@@ -53,7 +53,10 @@ public class SourceSystemController {
 	
 
 	@RequestMapping(value="/new",method=RequestMethod.POST,params="_save")
-	public String submitNewForm(HttpServletRequest request, @ModelAttribute("sourcesystem") @Valid SourceSystemForm form, BindingResult result) {
+	public String submitNewForm(HttpServletRequest request, 
+			@ModelAttribute("sourcesystem") @Valid SourceSystemForm form, 
+			BindingResult result) {
+		
 		if (result.hasErrors()) {
 			return "sourcesystem/new";
 		}
@@ -61,6 +64,8 @@ public class SourceSystemController {
 		SourceSystem ss = new SourceSystem();
 		ss.setIdentifier(form.getId());
 		ss.setName(form.getName());
+		ss.setOutboundQueue(form.getOutboundQueue());
+		
 		service.save(ss);
 		
 		FlashMessages.add(request, "sourcesystem.succesfullyadded", 
@@ -123,6 +128,7 @@ public class SourceSystemController {
 		
 		SourceSystem ss = this.service.get(id);
 		ss.setName(form.getName());
+		ss.setOutboundQueue(form.getOutboundQueue());
 		this.service.save(ss);
 		
 		FlashMessages.add(request, "sourcesystem.succesfullyupdated", 

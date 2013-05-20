@@ -13,6 +13,10 @@ import com.google.common.base.Throwables;
 
 public class AuditData implements Cloneable {
 
+	public static final int MAX_LENGTH_CREATED_BY = 25;
+
+	public static final int MAX_LENGTH_UPDATED_BY = 25;
+
 	@Override
 	public Object clone() {
 		try {
@@ -33,11 +37,11 @@ public class AuditData implements Cloneable {
 	Date updated = new Date();
 	
 	@Basic
-	@Column(name="CREATED_BY",nullable=false,updatable=false)
+	@Column(name="CREATED_BY",nullable=false,updatable=false,length=MAX_LENGTH_CREATED_BY)
 	String createdBy = "unknown";
 	
 	@Basic
-	@Column(name="UPDATED_BY",nullable=false)
+	@Column(name="UPDATED_BY",nullable=false,length=MAX_LENGTH_UPDATED_BY)
 	String updatedBy = "unknown";
 	
 	public void touchLastModified(String user) {

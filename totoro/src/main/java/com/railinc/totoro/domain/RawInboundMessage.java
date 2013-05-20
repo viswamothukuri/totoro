@@ -30,7 +30,7 @@ public class RawInboundMessage implements Auditable {
 
 	@Basic
 	@Enumerated(value=EnumType.STRING)
-	@Column(name="PROCESSED",nullable=false,updatable=true,length=1)
+	@Column(name="PROCESSED",nullable=false,updatable=true,length=YesNo.MAX_LENGTH)
 	private YesNo processed = YesNo.N;
 	
 	@Basic

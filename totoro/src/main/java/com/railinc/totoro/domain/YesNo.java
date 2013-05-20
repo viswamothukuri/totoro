@@ -2,6 +2,7 @@ package com.railinc.totoro.domain;
 
 public enum YesNo {
 	Y(true),N(false);
+	public static final int MAX_LENGTH = 1;
 	private boolean e;
 
 	YesNo(boolean equiv) {

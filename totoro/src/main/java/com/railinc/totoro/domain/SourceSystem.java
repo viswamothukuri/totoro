@@ -18,6 +18,9 @@ import com.google.common.base.Optional;
 @EntityListeners(value=AuditListener.class)
 public class SourceSystem implements Auditable, SoftDelete {
 
+	public static final int MAX_LENGTH_OUTBOUND_QUEUE = 256;
+	public static final int MAX_LENGTH_NAME = 100;
+	public static final int MAX_LENGTH_ID = 20;
 	public static final String PROPERTY_ID = "identifier";
 	public static final String PROPERTY_NAME = "name";
 	public static final String PROPERTY_OUTBOUND_QUEUE = "outboundQueue";
@@ -25,7 +28,7 @@ public class SourceSystem implements Auditable, SoftDelete {
 	public static final String DEFAULT_ORDER_BY_PROPERTY = PROPERTY_ID;
 	
 	@Id
-    @Column(name="SS_ID")
+    @Column(name="SS_ID",length=MAX_LENGTH_ID)
 	private String identifier;
 
 	@Version
@@ -33,11 +36,11 @@ public class SourceSystem implements Auditable, SoftDelete {
     private Integer version;
 
 	@Basic
-	@Column(name="NAME")
+	@Column(name="NAME",length=MAX_LENGTH_NAME)
 	private String name;
 	
 	@Basic
-	@Column(name="OUTBOUND_QUEUE")
+	@Column(name="OUTBOUND_QUEUE",length=MAX_LENGTH_OUTBOUND_QUEUE)
 	private String outboundQueue;
 	
 
@@ -46,7 +49,7 @@ public class SourceSystem implements Auditable, SoftDelete {
 	
 	@Basic
 	@Enumerated(value=EnumType.STRING)
-	@Column(name="DELETED",nullable=false,updatable=true,length=1)
+	@Column(name="DELETED",nullable=false,updatable=true,length=YesNo.MAX_LENGTH)
 	private YesNo deleted = YesNo.N;
 	
 

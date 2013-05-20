@@ -43,15 +43,17 @@
 				<col />
 				<col />
 				<col />
+				<col />
 				<col width="20%" align="right"/>
 			</colgroup>
 			<thead>
 				<tr>
-					<th class="p_id"><fmt:message key="sourcesystem.list.th.id"/></th>
-					<th class="p_name"><fmt:message key="sourcesystem.list.th.name"/></th>
-					<th class="p_deleted"><fmt:message key="sourcesystem.list.th.status"/></th>
-					<th class=""><fmt:message key="sourcesystem.list.th.updater"/></th>
-					<th class="p_actions"><fmt:message key="sourcesystem.list.th.actions"/></th>
+					<th><fmt:message key="sourcesystem.list.th.id"/></th>
+					<th><fmt:message key="sourcesystem.list.th.name"/></th>
+					<th><fmt:message key="sourcesystem.list.th.outboundQueue"/></th>
+					<th><fmt:message key="sourcesystem.list.th.status"/></th>
+					<th><fmt:message key="sourcesystem.list.th.updater"/></th>
+					<th><fmt:message key="sourcesystem.list.th.actions"/></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -59,6 +61,7 @@
 					<tr id="ss_${r.identifier }" class="${r.deleted ? 'warning' : '' }">
 						<td class="p_id highlight-search-result">${r.identifier }</td>
 						<td class="p_name highlight-search-result">${r.name }</td>
+						<td class="highlight-search-result">${r.outboundQueue }</td>
 						<td class="p_deleted">
 						<c:if test="${r.deleted }">
 						<span class="label label-warning"><fmt:message key="sourcesystem.list.td.status.deleted"/></span>

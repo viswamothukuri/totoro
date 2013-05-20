@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,12 @@ public class SourceSystemServiceImpl implements SourceSystemService {
 		if (isNotBlank(filter)) {
 			filter = "%" + filter + "%";
 			c.add(Restrictions.or(
-					Restrictions.ilike(SourceSystem.PROPERTY_ID, filter),Restrictions.ilike(SourceSystem.PROPERTY_NAME, filter))
-			);
+					Restrictions.ilike(SourceSystem.PROPERTY_OUTBOUND_QUEUE, filter, MatchMode.ANYWHERE),
+					Restrictions.or(
+						Restrictions.ilike(SourceSystem.PROPERTY_ID, filter, MatchMode.ANYWHERE),
+						Restrictions.ilike(SourceSystem.PROPERTY_NAME, filter, MatchMode.ANYWHERE)
+					)
+				));
 			
 		}
 		c.addOrder(Order.asc(SourceSystem.PROPERTY_ID));

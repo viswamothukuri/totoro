@@ -28,10 +28,22 @@
 				<form:label path="name" cssClass="control-label"><fmt:message key="sourcesystem.form.label.name"/></form:label>
 			
 				<div class="controls">
-					<form:input path="name" placeholder="Name" cssClass="input-large"/>
+					<form:input path="name" placeholder="Name" cssClass="input-xlarge"/>
 					<form:errors element="span" cssClass="help-inline" path="name"/>
 				</div>
 			</div>
+			
+			<c:set var="cssClass"><spring:bind path="sourcesystem.outboundQueue"><c:if test="${status.error}">error</c:if></spring:bind></c:set>
+			<div class="control-group ${cssClass }">
+				<form:label path="outboundQueue" cssClass="control-label"><fmt:message key="sourcesystem.form.label.outboundQueue"/></form:label>
+			
+				<div class="controls">
+					<form:input path="outboundQueue" placeholder="Outbound Queue Name" cssClass="input-xlarge"/>
+					<form:errors element="span" cssClass="help-inline" path="outboundQueue"/>
+				</div>
+			</div>
+			
+			
 		</fieldset>
 			<div class="form-actions">
 				<button type="submit" class="btn btn-primary" name="_save"><fmt:message key="sourcesystem.form.button.save"/></button>

@@ -69,7 +69,7 @@ public class Responsibility implements SoftDelete, Auditable {
 	
 	@Basic
 	@Enumerated(value=EnumType.STRING)
-	@Column(name="DELETED",nullable=false,updatable=true,length=1)
+	@Column(name="DELETED",nullable=false,updatable=true,length=YesNo.MAX_LENGTH)
 	private YesNo deleted = YesNo.N;
 
 	
