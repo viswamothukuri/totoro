@@ -34,7 +34,7 @@
 		<li>Exception Ingest</li>
 		<li>Exemption Processing</li>
 		<li>Exemption Notification</li>
-		<li>Responsible Person Identification</li>
+		<li>Complete Responsible Person Identification</li>
 		<li>Bundling</li>
 		<li>Task Creation from Bundles
 			<p>(task type based on responsible person?)</p>
@@ -50,6 +50,7 @@
 		<li>Spring Web Flow for Task Handling?</li>
 		<li>Task Completion Notification to MDM</li>
 		<li>JMX Enable</li>
+		
 	</ul>
 	<div style="clear:both"></div>
 	</div>
