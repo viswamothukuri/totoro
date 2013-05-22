@@ -160,7 +160,7 @@
 			<artifactId>guava</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.iron.ironmq</groupId>
+			<groupId>io.iron</groupId>
 			<artifactId>ironmq</artifactId>
 			<version>0.0.9</version>
 		</dependency>
