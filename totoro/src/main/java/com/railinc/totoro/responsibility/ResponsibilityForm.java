@@ -2,10 +2,9 @@ package com.railinc.totoro.responsibility;
 
 import static org.apache.commons.lang.StringUtils.trimToNull;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -22,8 +21,7 @@ public class ResponsibilityForm {
 
 	private SourceSystem sourceSystem;
 
-	@Min(1)
-	@Max(Responsibility.MAX_LENGTH_RULENUMBER)
+	@Size(min=1,max=Responsibility.MAX_LENGTH_RULENUMBER)
 	@Pattern(regexp="-?\\d+,-?\\d+")//,message="Must be either blank or a numeric range like 1,3"
     private String ruleNumber;
 
@@ -34,7 +32,7 @@ public class ResponsibilityForm {
 	
 	private boolean deleted;
 	
-	@Max(value=Note.MAX_LENGTH_NOTES)
+	@Size(min=1,max=Note.MAX_LENGTH_NOTES)
 	private String note;
 	
 	private AuditData auditData = new AuditData();
