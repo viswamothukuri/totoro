@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="decorator" content="clean-bootstrap" />
-<title>Edit User Group</title>
+<title><fmt:message key="responsibility.title.edit" /></title>
 <meta name="where" content="admin.responsibility.edit" />
 
 </head>
@@ -14,7 +14,7 @@
 
 
 <fieldset>
-    <legend>Basic Information</legend>
+    <legend><fmt:message key="responsibility.title.edit" /></legend>
     
 			<c:set var="cssClass"><spring:bind path="responsibility.sourceSystem"><c:if test="${status.error}">error</c:if></spring:bind></c:set>
 			<div class="control-group ${cssClass }">
@@ -66,6 +66,14 @@
 				</div>
 			</div>
 			
+			<c:set var="cssClass"><spring:bind path="responsibility.precedence"><c:if test="${status.error}">error</c:if></spring:bind></c:set>
+			<div class="control-group ${cssClass }">
+				<form:label path="id" cssErrorClass="control-label" cssClass="control-label"><fmt:message key="responsibility.form.label.precedence" /></form:label>
+				<div class="controls">
+					<form:input path="precedence" placeholder="" cssErrorClass="input-small error" cssClass="input-small" maxlength="10"/>
+					<form:errors element="span" cssClass="help-inline" path="precedence"/>
+				</div>
+			</div>
 		
 		<c:set var="cssClass"><spring:bind path="responsibility.note"><c:if test="${status.error}">error</c:if></spring:bind></c:set>
 			<div class="control-group ${cssClass }">

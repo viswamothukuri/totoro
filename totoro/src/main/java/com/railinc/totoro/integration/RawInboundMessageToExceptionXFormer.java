@@ -67,7 +67,7 @@ public class RawInboundMessageToExceptionXFormer implements Transformer, Functio
 		DataException d = new DataException();
 		SourceSystem sourceSystem = service.get(in.getSourceSystem());
 		d.setSourceSystem(sourceSystem);
-		d.setCode(in.getCode());
+		d.setRuleNumber(in.getCode());
 		d.setDescription(in.getDescription());
 		d.setExceptionCreated(in.getCreated());
 		d.setMdmAttributevalue(in.getMdmAttributevalue());

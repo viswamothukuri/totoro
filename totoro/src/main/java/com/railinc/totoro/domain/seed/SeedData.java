@@ -14,6 +14,7 @@ import com.google.common.collect.Iterables;
 import com.railinc.totoro.domain.Identity;
 import com.railinc.totoro.domain.IdentityType;
 import com.railinc.totoro.domain.Responsibility;
+import com.railinc.totoro.domain.RuleNumberType;
 import com.railinc.totoro.domain.SourceSystem;
 import com.railinc.totoro.responsibility.ResponsibilityCriteria;
 import com.railinc.totoro.responsibility.ResponsibilityService;
@@ -44,8 +45,9 @@ public class SeedData implements InitializingBean {
 		SourceSystem rapid = add(sourceSystem("RAPID","Rapid"));
 		SourceSystem sso = add(sourceSystem("SSO","Single Sign On"));
 		SourceSystem crm = add(sourceSystem("CRM","Customer Relationship Management"));
-		add(responsibility(null,null,IdentityType.SsoRole,"TOTORODATASTEWARD"));
-		add(responsibility(sso,null,IdentityType.SsoId, "sdtxs01"));
+		add(responsibility(null,RuleNumberType.DEFAULT, null, null,IdentityType.SsoRole,"TOTORODATASTEWARD", 10000));
+		add(responsibility(sso, RuleNumberType.DEFAULT, null, null, IdentityType.SsoId, "sdtxs01", 900));
+		add(responsibility(sso, RuleNumberType.SINGLE, 1L, null, IdentityType.SsoId, "itvxm01", 600));
 	}
 	
 	private void add(Responsibility responsibility) {
@@ -60,13 +62,16 @@ public class SeedData implements InitializingBean {
 	private SourceSystem sourceSystem(String id, String name) {
 		return new SourceSystem(id,name);
 	}
-	private Responsibility responsibility(SourceSystem sourceSystem, String ruleNumber, IdentityType identityType, String identityId) {
+	private Responsibility responsibility(SourceSystem sourceSystem, RuleNumberType ruleNumberType,Long ruleNumberFrom, Long ruleNumberThru, IdentityType identityType, String identityId, int precedence) {
 		Responsibility r = new Responsibility();
 		r.setResponsiblePerson(new Identity(identityType, identityId));
-		r.setRuleNumber(ruleNumber);
+		r.setRuleNumberType(ruleNumberType);
+		r.setRuleNumberFrom(ruleNumberFrom);
+		r.setRuleNumberThru(ruleNumberThru);
 		r.setSourceSystem(sourceSystem);
 		r.setResponsiblePersonType(identityType);
 		r.setResponsiblePersonId(identityId);
+		r.setPrecedence(precedence);
 		return r;
 	}
 

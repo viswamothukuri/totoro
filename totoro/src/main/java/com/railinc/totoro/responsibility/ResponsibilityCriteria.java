@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.railinc.totoro.domain.IdentityType;
 import com.railinc.totoro.domain.Responsibility;
+import com.railinc.totoro.domain.RuleNumberType;
 import com.railinc.totoro.domain.SourceSystem;
 import com.railinc.totoro.util.CriteriaValue;
 import com.railinc.totoro.util.CriteriaWithPaging;
@@ -17,7 +18,10 @@ public class ResponsibilityCriteria extends CriteriaWithPaging {
 	
 	
 	private CriteriaValue<SourceSystem> sourceSystem = CriteriaValue.unspecified();
-    private CriteriaValue<String> ruleNumber = CriteriaValue.unspecified();
+	private CriteriaValue<RuleNumberType> ruleNumberType = CriteriaValue.unspecified();
+	private CriteriaValue<Long> ruleNumberFrom = CriteriaValue.unspecified();
+	private CriteriaValue<Long> ruleNumberThru = CriteriaValue.unspecified();
+    private CriteriaValue<Long> ruleNumber = CriteriaValue.unspecified();
 	private CriteriaValue<IdentityType> personType = CriteriaValue.unspecified();
 	private CriteriaValue<String> person = CriteriaValue.unspecified();
 	private CriteriaValue<String> freeText = CriteriaValue.unspecified();
@@ -30,7 +34,9 @@ public class ResponsibilityCriteria extends CriteriaWithPaging {
 	 */
 	public ResponsibilityCriteria(Responsibility s) {
 		sourceSystem = CriteriaValue.orNull(s.getSourceSystem());
-		ruleNumber = CriteriaValue.orNull(s.getRuleNumber());
+		ruleNumberType = CriteriaValue.orNull(s.getRuleNumberType());
+		ruleNumberFrom = CriteriaValue.orNull(s.getRuleNumberFrom());
+		ruleNumberThru = CriteriaValue.orNull(s.getRuleNumberThru());
 		person = CriteriaValue.orNull(s.getResponsiblePersonId());
 		personType = CriteriaValue.orNull(s.getResponsiblePersonType());
 	}
@@ -49,12 +55,36 @@ public class ResponsibilityCriteria extends CriteriaWithPaging {
 		this.sourceSystem = CriteriaValue.orUnspecified(value);
 	}
 	
-	public CriteriaValue<String> getRuleNumber() {
+	public CriteriaValue<Long> getRuleNumber() {
 		return ruleNumber;
 	}
 	
-	public void setRuleNumber(String value) {
-		this.ruleNumber = CriteriaValue.orUnspecified(StringUtils.trimToNull(value));
+	public void setRuleNumber(Long value) {
+		this.ruleNumber = CriteriaValue.orUnspecified(value);
+	}
+	
+	public void setRuleNumberType(CriteriaValue<RuleNumberType> ruleNumberType) {
+		this.ruleNumberType = ruleNumberType;
+	}
+	
+	public void setRuleNumberFrom(CriteriaValue<Long> ruleNumberFrom) {
+		this.ruleNumberFrom = ruleNumberFrom;
+	}
+	
+	public void setRuleNumberThru(CriteriaValue<Long> ruleNumberThru) {
+		this.ruleNumberThru = ruleNumberThru;
+	}
+	
+	public CriteriaValue<RuleNumberType> getRuleNumberType() {
+		return ruleNumberType;
+	}
+	
+	public CriteriaValue<Long> getRuleNumberFrom() {
+		return ruleNumberFrom;
+	}
+	
+	public CriteriaValue<Long> getRuleNumberThru() {
+		return ruleNumberThru;
 	}
 	
 	public CriteriaValue<IdentityType> getPersonType() {

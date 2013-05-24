@@ -2,6 +2,8 @@ package com.railinc.totoro.responsibility;
 
 import static org.apache.commons.lang.StringUtils.trimToNull;
 
+import java.text.ParseException;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -12,7 +14,9 @@ import com.railinc.totoro.domain.AuditData;
 import com.railinc.totoro.domain.IdentityType;
 import com.railinc.totoro.domain.Note;
 import com.railinc.totoro.domain.Responsibility;
+import com.railinc.totoro.domain.RuleNumberType;
 import com.railinc.totoro.domain.SourceSystem;
+import com.railinc.totoro.util.NumberRangeParser;
 
 public class ResponsibilityForm {
 
@@ -22,7 +26,7 @@ public class ResponsibilityForm {
 	private SourceSystem sourceSystem;
 
 	@Size(min=1,max=Responsibility.MAX_LENGTH_RULENUMBER)
-	@Pattern(regexp="-?\\d+,-?\\d+")//,message="Must be either blank or a numeric range like 1,3"
+	@Pattern(regexp="-?\\d+(,-?\\d+)?", message="Rule number should be either null or 1 or 1,3")//,message="Must be either blank or a numeric range like 1,3"
     private String ruleNumber;
 
 	@NotNull
@@ -38,6 +42,9 @@ public class ResponsibilityForm {
 	private AuditData auditData = new AuditData();
 	
 	private int version;
+	
+	@NotNull
+	private Integer precedence;
 	
 	public AuditData getAuditData() {
 		return auditData;
@@ -97,6 +104,43 @@ public class ResponsibilityForm {
 	public String getRuleNumber() {
 		return ruleNumber;
 	}
+	
+	public RuleNumberType getRuleNumberType(){
+		if(getRuleNumberFrom()!=null && getRuleNumberThru()!=null){
+			return RuleNumberType.RANGE;
+		}
+		
+		if(getRuleNumberFrom()!=null){
+			return RuleNumberType.SINGLE;
+		}
+		
+		return RuleNumberType.DEFAULT;
+	}
+	
+	public Long getRuleNumberFrom(){
+		if(StringUtils.isBlank(ruleNumber)){
+			return null;
+		}
+		try {
+			return NumberRangeParser.parse(ruleNumber).getMinimumLong();
+		} catch (ParseException e) {
+		}
+		return null;
+	}
+	
+	public Long getRuleNumberThru(){
+		if(StringUtils.isBlank(ruleNumber)){
+			return null;
+		}
+		try {
+			if(!NumberRangeParser.isMinimumAndMaximumNumbersSame(ruleNumber)){
+				return NumberRangeParser.parse(ruleNumber).getMaximumLong();
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public void setRuleNumber(String ruleNumber) {
 		this.ruleNumber = StringUtils.trimToNull(ruleNumber);
@@ -122,5 +166,12 @@ public class ResponsibilityForm {
 		this.version = version;
 	}
 
+	public void setPrecedence(Integer precedence) {
+		this.precedence = precedence;
+	}
+	
+	public Integer getPrecedence() {
+		return precedence;
+	}
 
 }

@@ -121,7 +121,10 @@ public class ResponsibilityController {
 		
 		Responsibility ss = new Responsibility();
 		ss.setResponsiblePersonId(form.getPerson());
-		ss.setRuleNumber(form.getRuleNumber());
+		ss.setRuleNumberType(form.getRuleNumberType());
+		ss.setRuleNumberFrom(form.getRuleNumberFrom());
+		ss.setRuleNumberThru(form.getRuleNumberThru());
+		ss.setPrecedence(form.getPrecedence());
 		ss.setSourceSystem(form.getSourceSystem());
 		ss.setResponsiblePersonType(form.getPersonType());
 		ss.setNoteText(form.getNote());
@@ -186,7 +189,10 @@ public class ResponsibilityController {
 		
 		Responsibility ss = this.service.get(id);
 		ss.setSourceSystem(form.getSourceSystem());
-		ss.setRuleNumber(form.getRuleNumber());
+		ss.setRuleNumberType(form.getRuleNumberType());
+		ss.setRuleNumberFrom(form.getRuleNumberFrom());
+		ss.setRuleNumberThru(form.getRuleNumberThru());
+		ss.setPrecedence(form.getPrecedence());
 		ss.setResponsiblePersonId(form.getPerson());
 		ss.setResponsiblePersonType(form.getPersonType());
 		ss.setNoteText(form.getNote());

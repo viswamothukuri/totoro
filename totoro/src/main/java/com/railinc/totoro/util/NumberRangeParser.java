@@ -110,6 +110,12 @@ public class NumberRangeParser {
 		}
 		return t == null ? new NumberRange(f) : new NumberRange(f,t);
 	}
+	
+	public static boolean isMinimumAndMaximumNumbersSame(String value) throws ParseException {
+		NumberRangeParser p = new NumberRangeParser(value);
+		NumberRange range= p.parse();
+		return range.getMinimumNumber().equals(range.getMaximumNumber());
+	}
 
 
 

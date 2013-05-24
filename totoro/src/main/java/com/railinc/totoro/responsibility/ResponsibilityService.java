@@ -3,6 +3,7 @@ package com.railinc.totoro.responsibility;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.railinc.totoro.domain.DataException;
 import com.railinc.totoro.domain.Responsibility;
 import com.railinc.totoro.util.PagedCollection;
 
@@ -14,4 +15,5 @@ public interface ResponsibilityService {
 	void delete(Responsibility s);
 	Responsibility get(Long id);
 	void undelete(Responsibility ss);
+	Responsibility getResponsibility(DataException data);
 }

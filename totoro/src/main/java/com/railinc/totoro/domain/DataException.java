@@ -64,7 +64,7 @@ public class DataException {
 
 	@Basic(optional=false)
 	@Column(name="EXCPTN_CD",nullable=false)
-	private Long code;
+	private Long ruleNumber;
 
 	@Basic(optional=true)
 	@Column(name="EXCPTN_DESC",nullable=true)
@@ -191,12 +191,12 @@ public class DataException {
 		this.sourceSystemRecordIdentifier = sourceSystemRecordIdentifier;
 	}
 
-	public Long getCode() {
-		return code;
+	public Long getRuleNumber() {
+		return ruleNumber;
 	}
 
-	public void setCode(Long code) {
-		this.code = code;
+	public void setRuleNumber(Long ruleNumber) {
+		this.ruleNumber = ruleNumber;
 	}
 
 	public String getDescription() {

@@ -13,21 +13,25 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.apache.commons.lang.builder.CompareToBuilder;
+
 import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
 
 @Entity
 @Table(name="RESPONSIBILITY")
-public class Responsibility implements SoftDelete, Auditable {
+public class Responsibility implements SoftDelete, Auditable, Comparable<Responsibility> {
 	@Override
 	public String toString() {
 		return "Responsibility [id=" + id + ", version=" + version
 				+ ", sourceSystem=" + sourceSystem + ", ruleNumber="
-				+ ruleNumber + ", responsiblePerson=" + responsiblePerson
+				+ getRuleNumber() + ", responsiblePerson=" + responsiblePerson
 				+ ", note=" + note + ", auditData=" + auditData
 				+ ", deleted=" + deleted + "]";
 	}
 
 	public static final int MAX_LENGTH_RULENUMBER = 20;
+	public static final int MAX_LENGTH_PRECEDENCE = 10;
 	
 	@Id
 	@GeneratedValue
@@ -45,15 +49,21 @@ public class Responsibility implements SoftDelete, Auditable {
 	@JoinColumn(name="SS_ID", nullable=true)
 	SourceSystem sourceSystem;
 
-	public static final String PROPERTY_RULENUMBER = "ruleNumber";
-	/**
-	 * i hesitate to do it like this, but it feels like a string column
-	 * will give us something easier to deal with programatically than multiple 
-	 * database columns...
-	 */
+	public static final String PROPERTY_RULENUMBER_TYPE = "ruleNumberType";
+	@Basic(optional=false)
+	@Enumerated(value=EnumType.STRING)
+	@Column(name="RULE_NUM_TYPE", nullable=false, length=RuleNumberType.MAX_LENGTH)
+	private RuleNumberType ruleNumberType;
+	
+	public static final String PROPERTY_RULENUMBER_FROM = "ruleNumberFrom";
 	@Basic(optional=true)
-	@Column(name="RULE_NUM",nullable=true,length=MAX_LENGTH_RULENUMBER)
-    private String ruleNumber;
+	@Column(name="RULE_NUM_FROM", nullable=true)
+	private Long ruleNumberFrom;
+	
+	public static final String PROPERTY_RULENUMBER_THRU = "ruleNumberThru";
+	@Basic(optional=true)
+	@Column(name="RULE_NUM_THRU", nullable=true)
+	private Long ruleNumberThru;
 
 	public static final String PROPERTY_RESPONSIBLE_PERSON_TYPE = "responsiblePerson." + Identity.PROPERTY_TYPE;
 	public static final String PROPERTY_RESPONSIBLE_PERSON_ID = "responsiblePerson." + Identity.PROPERTY_ID;
@@ -67,73 +77,123 @@ public class Responsibility implements SoftDelete, Auditable {
 	@Embedded
 	private AuditData auditData = new AuditData();
 	
+	public static final String PROPERTY_DELETED = "deleted";
 	@Basic
 	@Enumerated(value=EnumType.STRING)
 	@Column(name="DELETED",nullable=false,updatable=true,length=YesNo.MAX_LENGTH)
 	private YesNo deleted = YesNo.N;
+	
+	@Basic(optional = false)
+	@Column(name="PRECEDENCE", nullable=false, length=MAX_LENGTH_PRECEDENCE)
+	private int precedence;
 
 	
 	public boolean isDefaultSourceSystemMatch() {
 		return sourceSystem == null;
 	}
 	
-
-	
 	public boolean matches(Long rulenumber) {
-		if (isDefaultRuleNumberMatch()) { return true; }
+		if (isDefaultRule()) { return true; }
 		throw new RuntimeException("Not implemented");
 	}
-	
-	public boolean isDefaultRuleNumberMatch() {
-		return ruleNumber == null;
-	}
-
 	
 	public Long getId() {
 		return id;
 	}
 
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 
 	public Integer getVersion() {
 		return version;
 	}
 
-
 	public void setVersion(Integer version) {
 		this.version = version;
 	}
-
 
 	public SourceSystem getSourceSystem() {
 		return sourceSystem;
 	}
 
-
 	public void setSourceSystem(SourceSystem sourceSystem) {
 		this.sourceSystem = sourceSystem;
 	}
 
-
 	public String getRuleNumber() {
-		return ruleNumber;
+		if(RuleNumberType.SINGLE.equals(ruleNumberType)){
+			return ruleNumberFrom.toString();
+		}
+		if(RuleNumberType.RANGE.equals(ruleNumberType)){
+			return ruleNumberFrom.toString() +"," + ruleNumberThru.toString();
+		}
+		return null;
 	}
 
-
-	public void setRuleNumber(String ruleNumber) {
-		this.ruleNumber = ruleNumber;
+	public RuleNumberType getRuleNumberType(){
+		return this.ruleNumberType;
 	}
-
-
 	
+	public void setRuleNumberType(RuleNumberType ruleNumberType) {
+		this.ruleNumberType = ruleNumberType;
+	}
+	
+	public Long getRuleNumberFrom() {
+		return ruleNumberFrom;
+	}
+	
+	public void setRuleNumberFrom(Long ruleNumberFrom) {
+		this.ruleNumberFrom = ruleNumberFrom;
+	}
+	
+	public Long getRuleNumberThru() {
+		return ruleNumberThru;
+	}
+	
+	public void setRuleNumberThru(Long ruleNumberThru) {
+		this.ruleNumberThru = ruleNumberThru;
+	}
+
 	public Identity getResponsiblePerson() {
 		return responsiblePerson;
 	}
-
+	
+	
+	public boolean isDefaultSourceSystem(){
+		return sourceSystem == null;
+	}
+	
+	public boolean isDefaultRule(){
+		return RuleNumberType.DEFAULT.equals(getRuleNumberType());
+	}
+	
+	public boolean isApplicableForSingleRule(){
+		return RuleNumberType.SINGLE.equals(getRuleNumberType());
+	}
+	
+	public boolean isApplicableForRangeOfRules(){
+		return RuleNumberType.RANGE.equals(getRuleNumberType());
+	}
+	
+	public static final Predicate<Responsibility> isSourceSystemMatch(final SourceSystem sourceSystem){
+		return new Predicate<Responsibility>() {
+			@Override
+			public boolean apply(Responsibility input) {
+				return (input.isDefaultSourceSystem() || input.getSourceSystem().equals(sourceSystem));
+			}
+		};
+	}
+	
+	public static final Predicate<Responsibility> isRuleNumberMatch(final Long ruleNumber){
+		return new Predicate<Responsibility>() {
+			@Override
+			public boolean apply(Responsibility input) {
+				return (input.isDefaultRule() || ((input.isApplicableForSingleRule() && input.getRuleNumberFrom().equals(ruleNumber))
+				    	|| (input.isApplicableForRangeOfRules() && ruleNumber>= input.getRuleNumberFrom() && ruleNumber<= input.getRuleNumberThru())));
+			}
+		};
+	} 
 
 	public void setResponsiblePerson(Identity value) {
 		if (responsiblePerson == null) {
@@ -211,6 +271,19 @@ public class Responsibility implements SoftDelete, Auditable {
 	}
 	public void setNoteText(String v) {
 		setNote(new Note(v));
+	}
+	
+	public void setPrecedence(int precedence) {
+		this.precedence = precedence;
+	}
+	
+	public int getPrecedence() {
+		return precedence;
+	}
+	
+	@Override
+	public int compareTo(Responsibility other) {
+		return new CompareToBuilder().append(this.precedence, other.getPrecedence()).toComparison();
 	}
 	
 	

@@ -3,7 +3,7 @@
 <head>
 <meta name="decorator" content="clean-bootstrap" />
 <meta name="where" content="admin.responsibility.new" />
-<title>New User Group</title>
+<title><fmt:message key="responsibility.title.new" /></title>
 </head>
 <body>
 
@@ -14,7 +14,7 @@
 
 
 <fieldset>
-    <legend>Basic Information</legend>
+    <legend><fmt:message key="responsibility.title.new" /></legend>
 		
 
 
@@ -66,6 +66,15 @@
 				<div class="controls">
 					<form:input path="person" placeholder="" cssErrorClass="input-xlarge error" cssClass="input-xlarge" />
 					<form:errors element="span" cssClass="help-inline" path="person"/>
+				</div>
+			</div>
+			
+			<c:set var="cssClass"><spring:bind path="responsibility.precedence"><c:if test="${status.error}">error</c:if></spring:bind></c:set>
+			<div class="control-group ${cssClass }">
+				<form:label path="id" cssErrorClass="control-label" cssClass="control-label"><fmt:message key="responsibility.form.label.precedence" /></form:label>
+				<div class="controls">
+					<form:input path="precedence" placeholder="" cssErrorClass="input-small error" cssClass="input-small" maxlength="10"/>
+					<form:errors element="span" cssClass="help-inline" path="precedence"/>
 				</div>
 			</div>
 
