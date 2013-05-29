@@ -1,6 +1,7 @@
 package com.railinc.totoro.domain;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.AttributeOverride;
@@ -14,7 +15,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -22,9 +22,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
+import com.google.common.base.Optional;
+
 @Table(name="TASK")
 @Entity
-public class Task {
+public class Task implements Auditable{
 
 	@Id
 	@GeneratedValue
@@ -50,7 +52,7 @@ public class Task {
 	@Basic
 	@Column(name="DISPOSITION",nullable=true)
 	@Enumerated(value=EnumType.STRING)
-	TaskDisposition disposition;
+	TaskDisposition disposition = TaskDisposition.Available;
 	
 	/**
 	 * The completion status of a task, accepted,rejected,cancelled,timedout, etc... how did this task complete?
@@ -88,6 +90,9 @@ public class Task {
 	@OneToMany(mappedBy="task")
 	Set<DataException> exceptions;
 	
+	@Embedded
+	private AuditData auditData = new AuditData();
+	
 	
 	String taskView; // custom rendered view for the exception data.
 	
@@ -105,5 +110,27 @@ public class Task {
 
 	public void setVersion(Integer version) {
 		this.version = version;
+	}
+	
+	public Identity getCandidate() {
+		return candidate;
+	}
+	
+	public void setCandidate(Identity candidate) {
+		this.candidate = candidate;
+	}
+	
+	public void addDataException(DataException dataException){
+		if(exceptions == null){
+			exceptions = new HashSet<DataException>();
+		}
+		dataException.setTask(this);
+		exceptions.add(dataException);
+	}
+
+	@Override
+	public AuditData getAuditData() {
+		this.auditData = Optional.fromNullable(this.auditData).or(new AuditData());
+		return this.auditData;
 	}
 }

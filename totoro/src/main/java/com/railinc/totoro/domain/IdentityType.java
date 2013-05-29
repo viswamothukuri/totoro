@@ -19,6 +19,7 @@ public enum IdentityType {
 		}
 	}
 	
+	private IdentityType(){}
 	
 	IdentityType(String desc) {
 		this.description = desc;

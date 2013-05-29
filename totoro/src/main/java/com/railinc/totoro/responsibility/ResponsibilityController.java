@@ -51,6 +51,7 @@ public class ResponsibilityController {
 			f.setPerson(arg0.getResponsiblePersonId());
 			f.setPersonType(arg0.getResponsiblePersonType());
 			f.setRuleNumber(arg0.getRuleNumber());
+			f.setPrecedence(arg0.getPrecedence());
 			f.setSourceSystem(arg0.getSourceSystem());
 			f.setVersion(arg0.getVersion());
 			f.setNote(arg0.getNote().getText());

@@ -64,6 +64,7 @@
 				<col />
 				<col width="5%"/>
 				<col />
+				<col />
 				<col  width="5%" />
 				<col />
 				<col width="10%" align="right"/>
@@ -73,6 +74,7 @@
 					<th><fmt:message key="responsibility.list.th.sourcesystem"/></th>
 					<th><fmt:message key="responsibility.list.th.rulenumber"/></th>
 					<th><fmt:message key="responsibility.list.th.assignmenttype"/></th>
+					<th><fmt:message key="responsibility.list.th.precedence"/></th>
 					<th><fmt:message key="responsibility.list.th.status"/></th>
 					<th><fmt:message key="responsibility.list.th.updater"/></th>
 					<th class="p_actions"><fmt:message key="responsibility.list.th.actions"/></th>
@@ -103,6 +105,7 @@
 						</c:choose>
 						</td>
 						<td>${r.personType.toString() } (<span class="highlight-search-result">${r.person }</span>)</td>
+						<td>${r.precedence }</td>
 						<td class="p_deleted">
 						<c:if test="${r.deleted }">
 						<span class="label label-warning"><fmt:message key="responsibility.list.td.status.deleted"/></span>

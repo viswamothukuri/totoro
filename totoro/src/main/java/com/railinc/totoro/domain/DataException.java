@@ -2,6 +2,8 @@ package com.railinc.totoro.domain;
 
 import java.util.Date;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -108,7 +110,13 @@ public class DataException {
 	 * so that we can build tasks from the data exceptions.  
 	 */
 	@Embedded
-	private IdentityType responsiblePerson;
+	@AttributeOverrides( {
+        @AttributeOverride(name="type", column = @Column(name="IDENTITY_TYPE") ),
+        @AttributeOverride(name="id", column = @Column(name="IDENTITY_ID") )
+	} )
+	private Identity responsiblePerson;
+	
+	public static final String PROPERTY_TASK = "task";
 	
 	@ManyToOne(optional=true)
 	@JoinColumn(name="TASK_ID", nullable=true)
@@ -254,7 +262,14 @@ public class DataException {
 	public void setSource(RawInboundMessage source) {
 		this.source = source;
 	}
-
+	
+	public void setResponsiblePerson(Identity responsiblePerson) {
+		this.responsiblePerson = responsiblePerson;
+	}
+	
+	public Identity getResponsiblePerson() {
+		return responsiblePerson;
+	}
 
 	
 }

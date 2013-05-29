@@ -35,6 +35,7 @@
 		<li>Exemption Processing</li>
 		<li>Exemption Notification</li>
 		<li>Complete Responsible Person Identification</li>
+		<li>Implement Free Text search to find Responsibilities</li>
 		<li>Bundling</li>
 		<li>Task Creation from Bundles
 			<p>(task type based on responsible person?)</p>

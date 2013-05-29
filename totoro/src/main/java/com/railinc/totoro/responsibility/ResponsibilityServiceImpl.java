@@ -122,7 +122,7 @@ public class ResponsibilityServiceImpl implements ResponsibilityService {
 	@Override
 	public Responsibility getResponsibility(DataException data){
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Responsibility.class);
-		criteria.add(Restrictions.eq(Responsibility.PROPERTY_DELETED, YesNo.N.name()));
+		criteria.add(Restrictions.eq(Responsibility.PROPERTY_DELETED, YesNo.N));
 		
 		@SuppressWarnings("unchecked")
 		List<Responsibility> responsibilityList = (List<Responsibility>)criteria.list();

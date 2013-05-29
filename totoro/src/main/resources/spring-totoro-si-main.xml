@@ -140,26 +140,20 @@
 			<bean class="com.railinc.totoro.integration.StringToRawInboundXFormer"/>
 		</int:transformer>
 	</int:chain>
-    
-
-
-	<int:channel id="channelRawInboundMessageSink"
-		datatype="com.railinc.totoro.domain.RawInboundMessage">
+	
+	<int:channel id="channelRawInboundMessageSink" datatype="com.railinc.totoro.domain.RawInboundMessage">
 		<int:queue />
 		<int:interceptors>
 			<ref bean="interceptorHibernatePersister"/>
 		</int:interceptors>
 	</int:channel>
-
-
-
-
-	<int:transformer ref="xformerRawInboundJsonToDataException" input-channel="channelRawInboundMessageSink" output-channel="channelXFormedRawInbound">
+	
+	<int:chain input-channel="channelRawInboundMessageSink" output-channel="channelXFormedRawInbound">
 		<int:poller fixed-delay="100" time-unit="MILLISECONDS" max-messages-per-poll="100">
     		<int:transactional />
 		</int:poller>
-	</int:transformer>
-	
+		<int:transformer ref="xformerRawInboundJsonToDataException" />
+	</int:chain>    
 	
 	<int:channel id="channelXFormedRawInbound"/>
 	<int:payload-type-router input-channel="channelXFormedRawInbound" default-output-channel="syserr">
@@ -172,9 +166,10 @@
 		</int:interceptors>
 	</int:channel>
 	
+	<int:service-activator input-channel="channelDataExceptionMessageSink" ref="dataExceptionService" method="updateResponsiblePerson"/>
+	<bean id="dataExceptionService" class="com.railinc.totoro.dataexception.DataExceptionServiceImpl"/>
 	
-	
-	<int:bridge input-channel="channelDataExceptionMessageSink" output-channel="sysout"/>
+	<!--int:bridge input-channel="channelDataExceptionMessageSink" output-channel="sysout"/-->
 	
 	
 	<!-- 	
